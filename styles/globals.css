@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========= iOS 18 Design Tokens ========= */
+:root {
+  /* Colores base claros (modo claro) */
+  --ios-bg: 254 254 254;       /* casi blanco */
+  --ios-surface: 248 248 248;  /* gris muy claro */
+  --ios-fg: 17 17 17;          /* casi negro */
+
+  /* Acentos */
+  --ios-accent: 52 120 246;    /* iOS Blue */
+  --ios-accent-2: 88 86 214;   /* iOS Indigo */
+
+  /* Bordes y líneas */
+  --ios-border: 0 0 0 / 0.08;
+
+  /* Sombras sutiles */
+  --ios-shadow: 0 10px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+
+  /* Glassmorphism */
+  --ios-blur: saturate(180%) blur(24px);
+  --ios-panel: 255 255 255 / 0.7; /* capa blanca translúcida */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ios-bg: 10 10 12;
+    --ios-surface: 16 16 18;
+    --ios-fg: 240 240 245;
+
+    --ios-border: 255 255 255 / 0.08;
+
+    --ios-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+
+    --ios-panel: 0 0 0 / 0.5;
+  }
+}
+
+/* ========= Utilidades design system ========= */
+@layer utilities {
+  .bg-ios { background-color: rgb(var(--ios-bg)); }
+  .bg-ios\/surface { background-color: rgb(var(--ios-surface)); }
+  .text-ios\/fg { color: rgb(var(--ios-fg)); }
+  .border-ios { border-color: color-mix(in oklab, rgb(var(--ios-fg)) 8%, transparent); }
+
+  .ios-blur {
+    -webkit-backdrop-filter: var(--ios-blur);
+    backdrop-filter: var(--ios-blur);
+  }
+  .ios-panel {
+    background-color: color-mix(in oklab, rgb(var(--ios-fg)) 0%, transparent);
+    background: rgba(var(--ios-panel));
+  }
+
+  .ios-shadow { box-shadow: var(--ios-shadow); }
+  .ios-ring {
+    box-shadow: 0 0 0 1px color-mix(in oklab, rgb(var(--ios-fg)) 10%, transparent),
+      0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .tap-highlight-none { -webkit-tap-highlight-color: transparent; }
+}
+
+/* ========= Base ========= */
+@layer base {
+  html, body { height: 100%; }
+  body { overflow-x: hidden; }
+}
+
+/* ========= Componentes base ========= */
+@layer components {
+  .ios-card {
+    @apply ios-panel ios-blur ios-shadow rounded-3xl border border-ios;
+  }
+
+  .ios-button {
+    @apply rounded-full px-6 py-3 text-white bg-[rgb(52,120,246)] hover:bg-[rgb(48,112,230)] active:scale-[0.98] transition-transform duration-200 tap-highlight-none;
+    box-shadow: 0 8px 24px rgba(52,120,246,0.25);
+  }
+
+  .ios-pill {
+    @apply rounded-full ios-panel ios-blur border border-ios ios-shadow;
+  }
+}
+
+/* ========= Accesibilidad ========= */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52,120,246,0.35);
+  border-radius: 14px;
+}
