@@ -90,10 +90,8 @@ export default function SectionFeatures() {
   const [currentIndex, setCurrentIndex] = useState(1)
   const [direction, setDirection] = useState<Direction>(1)
   const [magicActive, setMagicActive] = useState(false)
-  const [magicPos, setMagicPos] = useState({ x: "50%", y: "50%" })
-  const magicFrameRef = useRef<number | null>(null)
   const magicBoundsRef = useRef<DOMRect | null>(null)
-  const magicPendingPosRef = useRef({ x: "50%", y: "50%" })
+  const magicLayerRef = useRef<HTMLDivElement | null>(null)
   const n = featureItems.length
 
   const currentSlide = featureItems[currentIndex]
@@ -133,27 +131,14 @@ export default function SectionFeatures() {
   const handleMagicMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = magicBoundsRef.current ?? event.currentTarget.getBoundingClientRect()
     magicBoundsRef.current = bounds
-    magicPendingPosRef.current = {
-      x: `${event.clientX - bounds.left}px`,
-      y: `${event.clientY - bounds.top}px`,
+    const x = `${event.clientX - bounds.left}px`
+    const y = `${event.clientY - bounds.top}px`
+
+    if (magicLayerRef.current) {
+      magicLayerRef.current.style.setProperty("--magic-x", x)
+      magicLayerRef.current.style.setProperty("--magic-y", y)
     }
-
-    if (magicFrameRef.current != null) return
-    magicFrameRef.current = globalThis.requestAnimationFrame(() => {
-      setMagicPos(magicPendingPosRef.current)
-      magicFrameRef.current = null
-    })
   }, [])
-
-  useEffect(
-    () => () => {
-      if (magicFrameRef.current != null) {
-        globalThis.cancelAnimationFrame(magicFrameRef.current)
-        magicFrameRef.current = null
-      }
-    },
-    [],
-  )
 
   return (
     <section id="features" className="relative overflow-hidden bg-black py-20 text-slate-100">
@@ -215,10 +200,12 @@ export default function SectionFeatures() {
                 )}
 
                 <div
+                  ref={magicLayerRef}
                   className="pointer-events-none absolute inset-0 rounded-[30px] transition-opacity duration-500 ease-out"
                   style={{
                     opacity: magicActive ? 1 : 0,
-                    background: `radial-gradient(520px at ${magicPos.x} ${magicPos.y}, rgba(255,255,255,0.14), transparent 70%)`,
+                    background:
+                      "radial-gradient(520px at var(--magic-x, 50%) var(--magic-y, 50%), rgba(255,255,255,0.14), transparent 70%)",
                   }}
                 />
 

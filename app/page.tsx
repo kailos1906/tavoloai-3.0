@@ -58,7 +58,11 @@ const contentSections = [
   { key: "features", Component: SectionFeatures, className: "w-full overflow-visible" },
   { key: "demo", Component: SectionDemo },
   { key: "how-it-works", Component: SectionHowItWorks },
-  { key: "before-after", Component: SectionBeforeAfter },
+  {
+    key: "before-after",
+    Component: SectionBeforeAfter,
+    className: "w-screen -mx-[calc((100vw-100%)/2)] px-0 overflow-visible",
+  },
   { key: "pricing", Component: SectionPricing },
   { key: "cases", Component: SectionCases },
   { key: "faq", Component: SectionFAQ },
@@ -210,13 +214,15 @@ export default function Page() {
       video.playbackRate = targetRate
     }
 
-    applyRate()
+    if (video.readyState >= 2) {
+      applyRate()
+      return
+    }
+
     video.addEventListener("loadeddata", applyRate)
-    video.addEventListener("ratechange", applyRate)
 
     return () => {
       video.removeEventListener("loadeddata", applyRate)
-      video.removeEventListener("ratechange", applyRate)
     }
   }, [])
 
@@ -239,9 +245,9 @@ export default function Page() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="relative min-h-screen overflow-hidden bg-black text-slate-100"
+      className="relative min-h-full overflow-hidden bg-black text-slate-100 flex flex-col"
     >
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-24 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-24 px-4 pt-16 pb-0 sm:px-6 lg:px-8">
         <motion.section variants={sectionVariants} className="w-full">
           <SectionHero />
         </motion.section>
@@ -375,7 +381,7 @@ export default function Page() {
 
       </div>
 
-      <motion.footer
+       <motion.footer
         variants={sectionVariants}
         viewport={{ once: true, amount: 0.4 }}
         initial="hidden"

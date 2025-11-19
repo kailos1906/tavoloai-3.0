@@ -20,12 +20,15 @@ type FloatingCTAProps = {
 const DEFAULT_HIDE_DELAY = 400
 const DEFAULT_BOTTOM_OFFSET = 80
 const HEADER_SAFE_OFFSET = 96
-const CTA_SPRING = {
-  type: "spring" as const,
-  damping: 42,
-  stiffness: 220,
-  mass: 1.05,
-  restDelta: 0.0005,
+const CTA_APPEARANCE_VARIANTS = {
+  hidden: { opacity: 0, y: 26, scale: 0.95, filter: "blur(8px)" },
+  visible: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+}
+const CTA_APPEARANCE_TRANSITION = {
+  duration: 0.55,
+  ease: [0.25, 1, 0.3, 1],
+  opacity: { duration: 0.5, ease: "linear" },
+  filter: { duration: 0.45, ease: "linear" },
 }
 const CTA_HOVER_SPRING = {
   type: "spring" as const,
@@ -52,11 +55,14 @@ export default function FloatingCTA({
   const [expanded, setExpanded] = useState(false)
   const [activeSection, setActiveSection] = useState<Element | null>(null)
   const [topPx, setTopPx] = useState<number | null>(null)
+  const [renderTop, setRenderTop] = useState<number | null>(null)
   const [globallyBlocked, setGloballyBlocked] = useState(false)
 
   const observerRef = useRef<IntersectionObserver | null>(null)
   const rafRef = useRef<number | null>(null)
   const hideTimerRef = useRef<number | null>(null)
+  const smoothRafRef = useRef<number | null>(null)
+  const animatedTopRef = useRef<number | null>(null)
 
   // Observer: detecta la sección visible y aplica la regla index % 4 === 0
   useEffect(() => {
@@ -107,6 +113,8 @@ export default function FloatingCTA({
   useEffect(() => {
     if (!activeSection) {
       setTopPx(null)
+      setRenderTop(null)
+      animatedTopRef.current = null
       if (rafRef.current) {
         globalThis.cancelAnimationFrame(rafRef.current)
         rafRef.current = null
@@ -143,10 +151,60 @@ export default function FloatingCTA({
     }
   }, [activeSection, bottomOffsetPx])
 
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined
+
+    if (topPx == null) {
+      if (smoothRafRef.current != null) {
+        globalThis.cancelAnimationFrame(smoothRafRef.current)
+        smoothRafRef.current = null
+      }
+      animatedTopRef.current = null
+      setRenderTop(null)
+      return undefined
+    }
+
+    if (animatedTopRef.current == null) {
+      animatedTopRef.current = topPx
+      setRenderTop(topPx)
+      return undefined
+    }
+
+    if (smoothRafRef.current != null) {
+      globalThis.cancelAnimationFrame(smoothRafRef.current)
+      smoothRafRef.current = null
+    }
+
+    const step = () => {
+      if (animatedTopRef.current == null) return
+      const current = animatedTopRef.current
+      const delta = topPx - current
+      const next = Math.abs(delta) < 0.6 ? topPx : current + delta * 0.25
+      animatedTopRef.current = next
+      setRenderTop(next)
+
+      if (next !== topPx) {
+        smoothRafRef.current = globalThis.requestAnimationFrame(step)
+      } else {
+        smoothRafRef.current = null
+      }
+    }
+
+    smoothRafRef.current = globalThis.requestAnimationFrame(step)
+
+    return () => {
+      if (smoothRafRef.current != null) {
+        globalThis.cancelAnimationFrame(smoothRafRef.current)
+        smoothRafRef.current = null
+      }
+    }
+  }, [topPx])
+
   // limpiar timers si el componente se desmonta
   useEffect(() => {
     return () => {
       if (rafRef.current) globalThis.cancelAnimationFrame(rafRef.current)
+      if (smoothRafRef.current) globalThis.cancelAnimationFrame(smoothRafRef.current)
       if (hideTimerRef.current) globalThis.clearTimeout(hideTimerRef.current)
     }
   }, [])
@@ -184,15 +242,11 @@ export default function FloatingCTA({
   const ButtonInner = (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 18, scale: 0.98, filter: "blur(4px)" }}
-      animate={{
-        opacity: visible ? 1 : 0,
-        y: visible ? 0 : 14,
-        scale: visible ? 1 : 0.985,
-        filter: visible ? "blur(0px)" : "blur(2px)",
-      }}
-      exit={{ opacity: 0, y: 14, scale: 0.98, filter: "blur(2px)" }}
-      transition={CTA_SPRING}
+      initial="hidden"
+      animate={visible ? "visible" : "hidden"}
+      exit="hidden"
+      variants={CTA_APPEARANCE_VARIANTS}
+      transition={CTA_APPEARANCE_TRANSITION}
       role="button"
       aria-label={resolvedLabel}
       whileHover={{
@@ -231,15 +285,17 @@ export default function FloatingCTA({
     </motion.div>
   )
 
+  const resolvedTop = renderTop ?? topPx
+
   // Render: si no hay sección activa (o topPx aún no calculado) o está bloqueado globalmente, no mostramos.
   return (
     <AnimatePresence>
-      {visible && topPx != null && !globallyBlocked && (
+      {visible && resolvedTop != null && !globallyBlocked && (
         <div
           className="fixed left-1/2 z-50 pointer-events-none"
           style={{
             transform: "translateX(-50%)",
-            top: `${topPx}px`,
+            top: resolvedTop,
           }}
         >
           <div

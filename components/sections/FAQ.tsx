@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { fadeInUp, staggerContainer } from "@/lib/motion"
 import { useTranslation } from "@/context/TranslationContext"
@@ -9,18 +9,50 @@ export default function SectionFAQ() {
   const { dictionary } = useTranslation()
   const faqItems = dictionary.faq.items
   const [open, setOpen] = useState<number | null>(0)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const bgVideoRef = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const sectionEl = sectionRef.current
+    const videoEl = bgVideoRef.current
+    if (!sectionEl || !videoEl) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isVisible = entry.isIntersecting && entry.intersectionRatio > 0.25
+        if (isVisible) {
+          videoEl.play().catch(() => {
+            /* ignore play failures */
+          })
+        } else {
+          videoEl.pause()
+        }
+      },
+      { threshold: [0, 0.25], rootMargin: "0px 0px 0px 0px" },
+    )
+
+    observer.observe(sectionEl)
+
+    return () => {
+      observer.disconnect()
+      videoEl.pause()
+    }
+  }, [])
 
   return (
     <section
       id="faq"
+      ref={sectionRef}
       className="relative overflow-hidden bg-black py-20 text-slate-100"
       style={{ marginLeft: "calc(50% - 50vw)", marginRight: "calc(50% - 50vw)", width: "100vw" }}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <video
+          ref={bgVideoRef}
           className="absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
           src="/videofondo.mp4"
-          autoPlay
+          preload="metadata"
           loop
           muted
           playsInline
@@ -67,7 +99,7 @@ export default function SectionFAQ() {
                   }`}
                   onClick={() => setOpen(isOpen ? null : index)}
                   whileHover={{ x: 1 }}
-                  transition={{ type: "spring", damping: 35, stiffness: 300 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
                 >
                   <span className="pr-4 text-slate-100">{item.question}</span>
                   <motion.span

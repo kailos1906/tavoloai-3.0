@@ -48,6 +48,8 @@
     "app/**/*.tsx",
     "components/**/*.ts",
     "components/**/*.tsx",
+    "registry/**/*.ts",
+    "registry/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

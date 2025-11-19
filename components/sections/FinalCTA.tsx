@@ -11,7 +11,7 @@ export default function SectionFinalCTA() {
   const finalCta = dictionary.finalCta
 
   const [glowActive, setGlowActive] = useState(false)
-  const [glowPosition, setGlowPosition] = useState({ x: "50%", y: "50%" })
+  const glowContainerRef = useRef<HTMLButtonElement | null>(null)
   const badgeRef = useRef<HTMLDivElement | null>(null)
   const badgeInView = useInView(badgeRef, { margin: "-22% 0px -12% 0px" })
   const badgeControls = useAnimationControls()
@@ -83,7 +83,11 @@ export default function SectionFinalCTA() {
     const bounds = event.currentTarget.getBoundingClientRect()
     const x = `${event.clientX - bounds.left}px`
     const y = `${event.clientY - bounds.top}px`
-    setGlowPosition({ x, y })
+    const el = glowContainerRef.current
+    if (el) {
+      el.style.setProperty("--glow-x", x)
+      el.style.setProperty("--glow-y", y)
+    }
   }
 
   return (
@@ -120,6 +124,7 @@ export default function SectionFinalCTA() {
 
         <motion.div variants={fadeInUp} className="mt-10 flex justify-center">
           <motion.button
+            ref={glowContainerRef}
             onClick={() => openAuthModal()}
             onMouseMove={handleGlowMove}
             onMouseEnter={() => setGlowActive(true)}
@@ -140,7 +145,8 @@ export default function SectionFinalCTA() {
               className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-500 ease-out"
               animate={{ opacity: glowActive ? 1 : 0 }}
               style={{
-                background: `radial-gradient(360px at ${glowPosition.x} ${glowPosition.y}, rgba(255,255,255,0.32), transparent 65%)`,
+                background:
+                  "radial-gradient(360px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,0.32), transparent 65%)",
               }}
             />
             <motion.div
@@ -152,7 +158,8 @@ export default function SectionFinalCTA() {
               initial={{ opacity: 0.26 }}
               animate={{ opacity: glowActive ? 0.4 : 0.26 }}
               style={{
-                background: `radial-gradient(160% 140% at ${glowPosition.x} ${glowPosition.y}, rgba(59,130,246,0.38), rgba(0,0,0,0.9) 68%, rgba(0,0,0,1) 96%)`,
+                background:
+                  "radial-gradient(160% 140% at var(--glow-x, 50%) var(--glow-y, 50%), rgba(59,130,246,0.38), rgba(0,0,0,0.9) 68%, rgba(0,0,0,1) 96%)",
               }}
             />
             <span className="relative z-20">{finalCta.cta}</span>

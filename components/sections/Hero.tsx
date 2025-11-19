@@ -306,7 +306,7 @@ export default function SectionHero() {
                 style={{
                   background:
                     "radial-gradient(circle at center, rgba(0,0,0,0) 16%, rgba(0,0,0,0.25) 42%, rgba(0,0,0,0.45) 68%, rgba(0,0,0,0.6) 82%, rgba(0,0,0,0.8) 92%)",
-                  filter: "blur(80px)",
+                  filter: "blur(60px)",
                 }}
               />
               <video
@@ -335,7 +335,7 @@ export default function SectionHero() {
                 style={{
                   background:
                     "radial-gradient(circle at center, rgba(0,0,0,0) 22%, rgba(0,0,0,0.35) 48%, rgba(0,0,0,0.6) 72%, rgba(0,0,0,0.82) 88%)",
-                  filter: "blur(90px)",
+                  filter: "blur(70px)",
                 }}
               />
               <div
@@ -344,7 +344,7 @@ export default function SectionHero() {
                 style={{
                   background:
                     "radial-gradient(circle at center, rgba(0,0,0,0) 28%, rgba(0,0,0,0.55) 64%, rgba(0,0,0,0.82) 88%, rgba(0,0,0,0.95) 94%, rgba(0,0,0,0.98) 96%, rgba(0,0,0,1) 100%)",
-                  filter: "blur(20px)",
+                  filter: "blur(16px)",
                 }}
               />
             </div>
