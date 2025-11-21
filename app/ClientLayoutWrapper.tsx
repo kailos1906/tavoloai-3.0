@@ -1,10 +1,12 @@
 "use client"
 
 import { usePathname, useSearchParams } from "next/navigation"
+import dynamic from "next/dynamic"
 import type { ReactNode } from "react"
-import Header from "@/components/layout/Header"
-import FloatingCTA from "@/components/ui/FloatingCTA"
 import { TranslationProvider, type LanguageCode } from "@/context/TranslationContext"
+
+const Header = dynamic(() => import("@/components/layout/Header"))
+const FloatingCTA = dynamic(() => import("@/components/ui/FloatingCTA"), { ssr: false })
 
 const FALLBACK_LANGUAGE: LanguageCode = "es"
 const LANGUAGE_SET = new Set<LanguageCode>(["es", "en", "it"])

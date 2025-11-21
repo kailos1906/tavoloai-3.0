@@ -1,13 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { memo, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { fadeInUp, staggerContainer } from "@/lib/motion"
+import dynamic from "next/dynamic"
 import { useTranslation } from "@/context/TranslationContext"
-import { NeonGradientCard } from "@/components/ui/neon-gradient-card"
 
-export default function SectionBeforeAfter() {
+const NeonGradientCard = dynamic(
+  () => import("@/components/ui/neon-gradient-card").then((mod) => mod.NeonGradientCard),
+  { ssr: false },
+)
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1], staggerChildren: 0.05 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] },
+  },
+}
+
+function SectionBeforeAfter() {
   const [sliderValue, setSliderValue] = useState(50)
   const { t } = useTranslation()
 
@@ -15,14 +37,14 @@ export default function SectionBeforeAfter() {
     <section id="before-after" className="relative overflow-hidden bg-black py-20 text-slate-100">
       <div className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 h-full w-screen -translate-x-1/2 bg-gradient-to-r from-[#0f0c29]/70 via-[#302b63]/55 to-[#24243e]/65 blur-[120px] opacity-70" />
       <motion.div
-        variants={staggerContainer}
+        variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, amount: 0.25 }}
         className="container mx-auto flex flex-col items-center px-4"
       >
         <motion.h2
-          variants={fadeInUp}
+          variants={itemVariants}
           className="mb-12 text-center text-3xl font-semibold text-white text-balance md:text-4xl"
         >
           {t("beforeAfter.title")}
@@ -30,7 +52,7 @@ export default function SectionBeforeAfter() {
 
         <motion.div
           className="relative w-full max-w-[34rem] md:max-w-[40rem]"
-          variants={fadeInUp}
+          variants={itemVariants}
           whileHover={{
             scale: 1.01,
             boxShadow: "0 24px 60px rgba(8,15,40,0.5)",
@@ -131,4 +153,6 @@ export default function SectionBeforeAfter() {
     </section>
   )
 }
+
+export default memo(SectionBeforeAfter)
 

@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Plus,
@@ -17,7 +18,8 @@ import {
   Link as LinkIcon,
   Eye,
 } from "lucide-react"
-import QRCode from "react-qr-code"
+
+const QRCode = dynamic(() => import("react-qr-code"), { ssr: false })
 
 /* =========================
    Tipos

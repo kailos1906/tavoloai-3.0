@@ -4,9 +4,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import AuthModal from "@/components/auth/AuthModal"
 import { useTranslation } from "@/context/TranslationContext"
+
+const AuthModal = dynamic(() => import("@/components/auth/AuthModal"), { ssr: false })
 
 export default function Header() {
   const router = useRouter()

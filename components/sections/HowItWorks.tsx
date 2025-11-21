@@ -1,7 +1,13 @@
 "use client"
 
-import { ScrollTimeline, type TimelineEvent } from "@/components/lightswind/scroll-timeline"
+import dynamic from "next/dynamic"
+import type { TimelineEvent } from "@/components/lightswind/scroll-timeline"
 import { useTranslation } from "@/context/TranslationContext"
+
+const ScrollTimeline = dynamic(
+  () => import("@/components/lightswind/scroll-timeline").then((mod) => mod.ScrollTimeline),
+  { ssr: false },
+)
 
 export default function SectionHowItWorks() {
   const { dictionary, t } = useTranslation()

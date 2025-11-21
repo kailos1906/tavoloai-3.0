@@ -1,8 +1,10 @@
 import "@/styles/globals.css"
 import { Inter } from "next/font/google"
+import dynamic from "next/dynamic"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
-import ClientLayoutWrapper from "./ClientLayoutWrapper"
+
+const ClientLayoutWrapper = dynamic(() => import("./ClientLayoutWrapper"))
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tavoloai.com"),

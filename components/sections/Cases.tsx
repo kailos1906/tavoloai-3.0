@@ -1,10 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils"
-import { Marquee } from "@/components/ui/marquee"
 import { fadeInUp, staggerContainer } from "@/lib/motion"
 import { useTranslation } from "@/context/TranslationContext"
+
+const Marquee = dynamic(
+  () => import("@/components/ui/marquee").then((mod) => mod.Marquee),
+  { ssr: false },
+)
 
 type ReviewCardProps = {
   img: string

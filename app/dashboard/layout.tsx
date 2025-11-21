@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
-import Sidebar from "./Sidebar"
-import DashboardNavbar from "./DashboardNavbar"
+import dynamic from "next/dynamic"
+
+const Sidebar = dynamic(() => import("./Sidebar"))
+const DashboardNavbar = dynamic(() => import("./DashboardNavbar"))
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (

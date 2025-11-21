@@ -1,9 +1,11 @@
 ﻿"use client"
 
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { FilePlus, QrCode, Bolt, Image, BarChart2, Settings } from "lucide-react"
-import StatsCard from "./StatsCard"
+
+const StatsCard = dynamic(() => import("./StatsCard"))
 
 const container = {
   hidden: { opacity: 0 },

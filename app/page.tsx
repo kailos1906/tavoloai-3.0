@@ -1,20 +1,22 @@
 ﻿"use client"
 import { Fragment, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
+import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { staggerContainer, fadeInUp } from "@/lib/motion"
-import SectionHero from "@/components/sections/Hero"
-import SectionFeatures from "@/components/sections/Features"
-import SectionDemo from "@/components/sections/Demo"
-import SectionBeforeAfter from "@/components/sections/BeforeAfter"
-import SectionHowItWorks from "@/components/sections/HowItWorks"
-import SectionPricing from "@/components/sections/Pricing"
-import SectionCases from "@/components/sections/Cases"
-import SectionFAQ from "@/components/sections/FAQ"
-import SectionFinalCTA from "@/components/sections/FinalCTA"
 import { SUPPORTED_LANGUAGES, type LanguageCode, useTranslation } from "@/context/TranslationContext"
 import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, Globe } from "lucide-react"
+
+const SectionHero = dynamic(() => import("@/components/sections/Hero"))
+const SectionFeatures = dynamic(() => import("@/components/sections/Features"))
+const SectionDemo = dynamic(() => import("@/components/sections/Demo"))
+const SectionBeforeAfter = dynamic(() => import("@/components/sections/BeforeAfter"))
+const SectionHowItWorks = dynamic(() => import("@/components/sections/HowItWorks"))
+const SectionPricing = dynamic(() => import("@/components/sections/Pricing"))
+const SectionCases = dynamic(() => import("@/components/sections/Cases"))
+const SectionFAQ = dynamic(() => import("@/components/sections/FAQ"))
+const SectionFinalCTA = dynamic(() => import("@/components/sections/FinalCTA"))
 
 const sectionVariants = {
   hidden: {
