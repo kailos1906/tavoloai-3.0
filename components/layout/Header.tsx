@@ -77,7 +77,7 @@ export default function Header() {
           mass: 0.8,
         }}
       >
-        <div className="container mx-auto flex items-center justify-between gap-6 py-3 px-6">
+        <div className="container mx-auto flex items-center justify-between gap-6 py-3 px-6 relative">
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -89,7 +89,7 @@ export default function Header() {
             </Link>
           </motion.div>
 
-          <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex lg:pl-16">
+          <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-5">
             {navItems.map((item) => (
               <motion.button
                 key={item.id}

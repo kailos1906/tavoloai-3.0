@@ -39,7 +39,7 @@ export default function SectionBeforeAfter() {
         >
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[110%] w-[110%] max-w-[60rem] -translate-x-1/2 -translate-y-1/2 rounded-[80px] bg-gradient-to-r from-[#ff2975]/30 via-[#ffb347]/25 to-[#00fff1]/30 blur-[120px] opacity-75" />
           <NeonGradientCard
-            className="relative z-10 w-full -ml-3 md:-ml-5"
+            className="relative z-10 w-full mx-auto"
             borderSize={0.25}
             borderRadius={20}
             neonColors={{ firstColor: "#ff2975", secondColor: "#00FFF1" }}

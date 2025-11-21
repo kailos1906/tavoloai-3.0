@@ -3,8 +3,30 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useAnimationControls, useInView } from "framer-motion"
 import { openAuthModal } from "@/lib/authModal"
-import { fadeInUp, staggerContainer } from "@/lib/motion"
 import { useTranslation } from "@/context/TranslationContext"
+
+const subtleStaggerContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
+      ease: [0.55, 0.1, 0.35, 1],
+    },
+  },
+}
+
+const subtleFadeInUp = {
+  hidden: { opacity: 0, y: 24, scale: 0.985, filter: "blur(4px)", rotateX: 4 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    rotateX: 0,
+    transition: { duration: 0.7, ease: [0.55, 0.1, 0.35, 1] },
+  },
+}
 
 export default function SectionFinalCTA() {
   const { dictionary } = useTranslation()
@@ -54,7 +76,7 @@ export default function SectionFinalCTA() {
       })
 
       haloControls.start({
-        opacity: [0.08, 0.25, 0.08],
+        opacity: [0.06, 0.18, 0.06],
         transition: { duration: 4.8, ease: "easeInOut", repeat: Infinity },
       })
     } else {
@@ -91,38 +113,38 @@ export default function SectionFinalCTA() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-black py-20 text-center text-slate-100">
+    <section className="relative bg-black py-20 text-center text-slate-100">
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
-          width: "min(1200px, 110vw)",
-          height: "min(800px, 110vw)",
+          width: "min(1000px, 100vw)",
+          height: "min(640px, 100vw)",
           background:
-            "radial-gradient(circle at 50% 40%, rgba(59,130,246,0.28) 0%, rgba(56,189,248,0.15) 32%, rgba(24,33,54,0.4) 60%, rgba(0,0,0,0.95) 88%, rgba(0,0,0,1) 100%)",
-          filter: "blur(140px)",
-          opacity: 0.6,
+            "radial-gradient(circle at 50% 40%, rgba(59,130,246,0.24) 0%, rgba(56,189,248,0.12) 32%, rgba(24,33,54,0.36) 60%, rgba(0,0,0,0.95) 88%, rgba(0,0,0,1) 100%)",
+          filter: "blur(120px)",
+          opacity: 0.45,
         }}
       />
 
       <motion.div
-        variants={staggerContainer}
+        variants={subtleStaggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
         className="container relative z-10"
       >
         <motion.h2
-          variants={fadeInUp}
+          variants={subtleFadeInUp}
           className="mb-6 text-4xl font-semibold text-white text-balance md:text-5xl"
         >
           {finalCta.title}
         </motion.h2>
 
-        <motion.p variants={fadeInUp} className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-300">
+        <motion.p variants={subtleFadeInUp} className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-300">
           {finalCta.description}
         </motion.p>
 
-        <motion.div variants={fadeInUp} className="mt-10 flex justify-center">
+        <motion.div variants={subtleFadeInUp} className="mt-10 flex justify-center">
           <motion.button
             ref={glowContainerRef}
             onClick={() => openAuthModal()}
@@ -146,7 +168,7 @@ export default function SectionFinalCTA() {
               animate={{ opacity: glowActive ? 1 : 0 }}
               style={{
                 background:
-                  "radial-gradient(360px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,0.32), transparent 65%)",
+                  "radial-gradient(360px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,0.26), transparent 65%)",
               }}
             />
             <motion.div
@@ -154,12 +176,12 @@ export default function SectionFinalCTA() {
               animate={{ opacity: glowActive ? 0.9 : 0.5 }}
             />
             <motion.div
-              className="pointer-events-none absolute inset-[-15%] blur-[140px]"
-              initial={{ opacity: 0.26 }}
-              animate={{ opacity: glowActive ? 0.4 : 0.26 }}
+              className="pointer-events-none absolute inset-[-12%] blur-[120px]"
+              initial={{ opacity: 0.22 }}
+              animate={{ opacity: glowActive ? 0.34 : 0.22 }}
               style={{
                 background:
-                  "radial-gradient(160% 140% at var(--glow-x, 50%) var(--glow-y, 50%), rgba(59,130,246,0.38), rgba(0,0,0,0.9) 68%, rgba(0,0,0,1) 96%)",
+                  "radial-gradient(160% 140% at var(--glow-x, 50%) var(--glow-y, 50%), rgba(59,130,246,0.3), rgba(0,0,0,0.9) 68%, rgba(0,0,0,1) 96%)",
               }}
             />
             <span className="relative z-20">{finalCta.cta}</span>
@@ -197,7 +219,7 @@ export default function SectionFinalCTA() {
             className="pointer-events-none absolute inset-0 rounded-full"
             animate={haloControls}
             style={{
-              background: "radial-gradient(circle at 20% 40%, rgba(255,255,255,0.25), transparent 55%)",
+              background: "radial-gradient(circle at 20% 40%, rgba(255,255,255,0.18), transparent 55%)",
             }}
           />
         </motion.div>

@@ -243,7 +243,7 @@ export default function SectionHero() {
             <video
               key={index}
               aria-hidden
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity ease-[cubic-bezier(0.55,0.1,0.35,1)] ${
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity ease-hero-bg ${
                 activeHeroBgVideo === index ? "opacity-100" : "opacity-0"
               }`}
               style={{ transitionDuration: `${HERO_BG_FADE_DURATION}ms`, willChange: "opacity" }}

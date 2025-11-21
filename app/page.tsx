@@ -19,9 +19,9 @@ import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, Globe } from "luc
 const sectionVariants = {
   hidden: {
     opacity: 0,
-    y: 40,
-    scale: 0.98,
-    filter: "blur(6px)",
+    y: 24,
+    scale: 0.99,
+    filter: "blur(4px)",
   },
   visible: {
     opacity: 1,
@@ -29,11 +29,9 @@ const sectionVariants = {
     scale: 1,
     filter: "blur(0px)",
     transition: {
-      type: "spring",
-      damping: 25,
-      stiffness: 200,
-      mass: 0.9,
-      restDelta: 0.001,
+      type: "tween",
+      duration: 0.7,
+      ease: [0.55, 0.1, 0.35, 1],
     },
   },
 }
@@ -43,8 +41,10 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
+      duration: 0.6,
+      ease: [0.55, 0.1, 0.35, 1],
+      staggerChildren: 0.18,
+      delayChildren: 0.12,
       when: "beforeChildren",
     },
   },
@@ -66,7 +66,7 @@ const contentSections = [
   { key: "pricing", Component: SectionPricing },
   { key: "cases", Component: SectionCases },
   { key: "faq", Component: SectionFAQ },
-  { key: "final-cta", Component: SectionFinalCTA },
+  { key: "final-cta", Component: SectionFinalCTA, className: "w-full pt-8 md:pt-12" },
 ]
 
 const visibleSections = showDemoSection ? contentSections : contentSections.filter(({ key }) => key !== "demo")
@@ -291,10 +291,10 @@ export default function Page() {
                     playsInline
                     muted
                     preload="metadata"
-                    className="relative z-10 w-full max-w-[min(480px,80vw)] origin-center object-cover transition duration-700 ease-out"
+                    className="relative z-10 w-full max-w-[min(640px,90vw)] origin-center object-cover transition duration-700 ease-hero-bg translate-x-4 sm:translate-x-6"
                     style={{
                       opacity: pricingActive ? 1 : 0,
-                      transform: `translateY(${pricingActive ? "-6px" : "6px"}) scale(${pricingActive ? 1 : 0.9})`,
+                      transform: `translateY(${pricingActive ? "-16px" : "-4px"}) scale(${pricingActive ? 1 : 0.9})`,
                       filter: "brightness(1.18) saturate(1.24)",
                       maskImage:
                         "radial-gradient(circle at center, rgba(0,0,0,1) 25%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0) 90%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%)",

@@ -1,17 +1,31 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { motion, useAnimation, useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import { openAuthModal } from "@/lib/authModal"
-import { fadeInUp } from "@/lib/motion"
 import { useTranslation } from "@/context/TranslationContext"
 
 const GRADIENT =
   "linear-gradient(90deg, #491f53 0%, #7e00bf 25%, #312783 50%, #006ae9 75%, #6adbff 90%, #3ea3dc 100%)"
 const CARD_SPRING = { type: "spring", damping: 22, stiffness: 250, mass: 0.9 }
+
+const cardEnter = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      damping: 26,
+      stiffness: 220,
+      mass: 0.9,
+      restDelta: 0.001,
+    },
+  },
+}
+
 const primaryCardVariants = {
-  hidden: fadeInUp.hidden,
-  visible: fadeInUp.visible,
+  hidden: cardEnter.hidden,
+  visible: cardEnter.visible,
   hover: {
     y: -10,
     scale: 1.01,
@@ -20,8 +34,8 @@ const primaryCardVariants = {
   },
 }
 const secondaryCardVariants = {
-  hidden: fadeInUp.hidden,
-  visible: fadeInUp.visible,
+  hidden: cardEnter.hidden,
+  visible: cardEnter.visible,
   hover: {
     y: -8,
     scale: 1.007,
@@ -30,53 +44,42 @@ const secondaryCardVariants = {
   },
 }
 
+const briskListStagger = {
+  hidden: {},
+  visible: { transition: { delayChildren: 0.35, staggerChildren: 0.05 } },
+}
+
+const listItemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: "easeOut" as const },
+  },
+}
+
 export default function SectionPricing() {
   const { dictionary } = useTranslation()
   const pricing = dictionary.pricing
-  const sectionRef = useRef(null)
-  const controls = useAnimation()
-  const isInView = useInView(sectionRef, { amount: 0.35, margin: "-15% 0px" })
-  const instantSectionReveal = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0, delayChildren: 0 } },
-  }
-  const briskListStagger = {
-    hidden: {},
-    visible: { transition: { delayChildren: 0.35, staggerChildren: 0.05 } },
-  }
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible")
-    } else {
-      controls.start("hidden")
-    }
-  }, [controls, isInView])
 
   return (
     <section id="pricing" className="relative overflow-hidden bg-black py-20 text-slate-100">
-      <motion.div
-        ref={sectionRef}
-        variants={instantSectionReveal}
-        initial="hidden"
-        animate={controls}
-        className="flex w-full justify-center"
-      >
+      <div className="flex w-full justify-center">
         <div className="w-full max-w-5xl px-6">
-          <motion.h2
-            variants={fadeInUp}
-            className="mb-4 text-center text-3xl font-semibold text-white md:text-4xl"
-          >
+          <h2 className="mb-4 text-center text-3xl font-semibold text-white md:text-4xl">
             {pricing.title}
-          </motion.h2>
+          </h2>
 
-          <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-center text-base text-slate-300 md:text-lg">
+          <p className="mx-auto mb-10 max-w-2xl text-center text-base text-slate-300 md:text-lg">
             {pricing.subtitle}
-          </motion.p>
+          </p>
 
           <div className="mx-auto grid grid-cols-1 items-stretch gap-8 md:grid-cols-2">
             <motion.div
               variants={primaryCardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.4, margin: "-10% 0px" }}
               whileHover="hover"
               className="relative rounded-3xl p-[1px]"
               style={{ background: GRADIENT }}
@@ -97,7 +100,7 @@ export default function SectionPricing() {
 
                   <motion.ul variants={briskListStagger} className="mt-6 space-y-3 text-sm text-slate-300">
                     {pricing.features.map((feature) => (
-                      <motion.li key={feature} variants={fadeInUp} className="flex items-start gap-3">
+                      <motion.li key={feature} variants={listItemVariants} className="flex items-start gap-3">
                         <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-xs font-bold text-white shadow-[0_15px_35px_rgba(59,130,246,0.35)]">
                           {"\u2713"}
                         </span>
@@ -120,6 +123,9 @@ export default function SectionPricing() {
 
             <motion.div
               variants={secondaryCardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.4, margin: "-10% 0px" }}
               whileHover="hover"
               className="relative rounded-3xl p-[1px]"
               style={{ background: GRADIENT }}
@@ -136,7 +142,7 @@ export default function SectionPricing() {
 
                 <motion.ul variants={briskListStagger} className="relative z-10 space-y-4 text-sm">
                   {pricing.comparePoints.map((point) => (
-                    <motion.li key={point} variants={fadeInUp} className="flex items-start gap-3">
+                    <motion.li key={point} variants={listItemVariants} className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 text-xs font-bold text-black shadow-[0_12px_28px_rgba(16,185,129,0.35)]">
                         {"\u2713"}
                       </span>
@@ -148,7 +154,7 @@ export default function SectionPricing() {
             </motion.div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

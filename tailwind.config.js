@@ -10,6 +10,9 @@ module.exports = {
   darkMode: ["class", "class"], // usa la clase .dark
   theme: {
   	extend: {
+      transitionTimingFunction: {
+        "hero-bg": "cubic-bezier(0.55, 0.1, 0.35, 1)",
+      },
   		colors: {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
