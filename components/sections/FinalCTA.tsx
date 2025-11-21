@@ -54,7 +54,7 @@ export default function SectionFinalCTA() {
       })
 
       haloControls.start({
-        opacity: [0.15, 0.45, 0.15],
+        opacity: [0.08, 0.25, 0.08],
         transition: { duration: 4.8, ease: "easeInOut", repeat: Infinity },
       })
     } else {
@@ -91,16 +91,16 @@ export default function SectionFinalCTA() {
   }
 
   return (
-    <section className="relative bg-black py-20 text-center text-slate-100">
+    <section className="relative overflow-hidden bg-black py-20 text-center text-slate-100">
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
-          width: "min(1400px, 120vw)",
-          height: "min(950px, 120vw)",
+          width: "min(1200px, 110vw)",
+          height: "min(800px, 110vw)",
           background:
             "radial-gradient(circle at 50% 40%, rgba(59,130,246,0.28) 0%, rgba(56,189,248,0.15) 32%, rgba(24,33,54,0.4) 60%, rgba(0,0,0,0.95) 88%, rgba(0,0,0,1) 100%)",
-          filter: "blur(180px)",
-          opacity: 0.9,
+          filter: "blur(140px)",
+          opacity: 0.6,
         }}
       />
 
@@ -197,7 +197,7 @@ export default function SectionFinalCTA() {
             className="pointer-events-none absolute inset-0 rounded-full"
             animate={haloControls}
             style={{
-              background: "radial-gradient(circle at 20% 40%, rgba(255,255,255,0.4), transparent 55%)",
+              background: "radial-gradient(circle at 20% 40%, rgba(255,255,255,0.25), transparent 55%)",
             }}
           />
         </motion.div>
