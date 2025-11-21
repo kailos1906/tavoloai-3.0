@@ -237,6 +237,26 @@
 
 /* ========= Componentes base ========= */
 @layer components {
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
   .ios-card {
     @apply brand-panel brand-blur brand-shadow rounded-3xl border border-brand;
   }
@@ -263,5 +283,19 @@
   outline: none;
   box-shadow: 0 0 0 3px rgba(62, 163, 220, 0.35);
   border-radius: 14px;
+}
+/* ========= Lenis integration ========= */
+/* Recomendado por Lenis: evitar conflictos con scroll nativo/trackpad */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Si usas contenedores con scroll interno, puedes prevenir que Lenis los capture */
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 

@@ -44,7 +44,7 @@ const inter = Inter({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" className={`${inter.variable} scroll-smooth`}>
+    <html lang="es" className={inter.variable}>
       <body className={`${inter.className} antialiased bg-[#050505] text-slate-100`}>
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
