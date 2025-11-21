@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { memo, useCallback, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Button from "./Button"
 import { openAuthModal } from "@/lib/authModal"
@@ -14,13 +14,21 @@ type SectionActionsProps = {
   className?: string
 }
 
-export default function SectionActions({ infoTitle, children, className }: SectionActionsProps) {
+function SectionActions({ infoTitle, children, className }: SectionActionsProps) {
   const [open, setOpen] = useState(false)
   const { dictionary } = useTranslation()
 
   const infoLabel = infoTitle ?? dictionary.sectionActions.infoLabel
   const hideLabel = dictionary.sectionActions.hideLabel
   const primaryLabel = dictionary.sectionActions.primaryCta
+
+  const handleToggle = useCallback(() => {
+    setOpen((value) => !value)
+  }, [])
+
+  const handlePrimaryClick = useCallback(() => {
+    openAuthModal()
+  }, [])
 
   return (
     <div className={["relative mt-12", className].filter(Boolean).join(" ")}>
@@ -56,7 +64,7 @@ export default function SectionActions({ infoTitle, children, className }: Secti
             <Button
               size="md"
               variant="outline"
-              onClick={() => setOpen((value) => !value)}
+              onClick={handleToggle}
               aria-expanded={open}
               className="relative overflow-hidden group"
             >
@@ -74,7 +82,7 @@ export default function SectionActions({ infoTitle, children, className }: Secti
           <motion.div variants={fadeInUp} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               size="md"
-              onClick={() => openAuthModal()}
+              onClick={handlePrimaryClick}
               aria-label={primaryLabel}
               glowEffect
               className="shadow-xl shadow-blue-500/25"
@@ -132,4 +140,6 @@ export default function SectionActions({ infoTitle, children, className }: Secti
     </div>
   )
 }
+
+export default memo(SectionActions)
 

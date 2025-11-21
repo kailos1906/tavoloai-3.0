@@ -1,5 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
+import { memo } from "react"
 
 interface StatsCardProps {
   title: string
@@ -7,7 +8,7 @@ interface StatsCardProps {
   trend: string
 }
 
-export default function StatsCard({ title, value, trend }: StatsCardProps) {
+function StatsCard({ title, value, trend }: StatsCardProps) {
   const isPositive = trend.includes("+")
   const isNeutral = trend === "="
 
@@ -45,3 +46,5 @@ export default function StatsCard({ title, value, trend }: StatsCardProps) {
     </motion.div>
   )
 }
+
+export default memo(StatsCard)

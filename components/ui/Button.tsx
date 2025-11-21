@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import type { ReactNode, ButtonHTMLAttributes } from "react"
+import { memo } from "react"
 import { iosSpring } from "@/lib/motion"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +15,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   glowEffect?: boolean
 }
 
-export default function Button({
+function ButtonComponent({
   children,
   variant = "primary",
   size = "md",
@@ -187,3 +188,7 @@ export default function Button({
     </motion.button>
   )
 }
+
+const Button = memo(ButtonComponent)
+
+export default Button

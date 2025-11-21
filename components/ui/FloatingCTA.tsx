@@ -1,6 +1,6 @@
 "use client"
 import type React from "react"
-import { useEffect, useState, useRef } from "react"
+import { memo, useCallback, useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { openAuthModal } from "@/lib/authModal"
@@ -42,7 +42,7 @@ const CTA_TAP_SPRING = {
   stiffness: 320,
   mass: 0.75,
 }
-export default function FloatingCTA({
+function FloatingCTA({
   label,
   href,
   onClick,
@@ -223,11 +223,14 @@ export default function FloatingCTA({
     }
   }, [])
 
-  const handleClick = (e?: React.MouseEvent) => {
-    e?.stopPropagation()
-    if (onClick) onClick()
-    else openAuthModal()
-  }
+  const handleClick = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation()
+      if (onClick) onClick()
+      else openAuthModal()
+    },
+    [onClick],
+  )
 
   const resolvedLabel = label ?? t("floatingCta.label")
 
@@ -328,3 +331,5 @@ export default function FloatingCTA({
     </AnimatePresence>
   )
 }
+
+export default memo(FloatingCTA)
