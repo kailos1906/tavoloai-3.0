@@ -13,6 +13,7 @@ export default function DashboardNavbar() {
       <div className="font-semibold text-slate-800">
         Panel de Restaurante
       </div>
+
       <div className="text-sm text-slate-500 font-medium">
         Sesión: demo@tavoloai.com
       </div>
