@@ -63,9 +63,6 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
   },
 ]
 
-// claves válidas para initialStates
-type RevealAnimationKey = NonNullable<ScrollTimelineProps["revealAnimation"]>
-
 export function ScrollTimeline({
   events = DEFAULT_EVENTS,
   title = "Timeline",
@@ -88,8 +85,8 @@ export function ScrollTimeline({
   darkMode = false,
   smoothScroll = true,
 }: ScrollTimelineProps) {
-  // 👈 aquí el cambio clave: HTMLElement, NO HTMLDivElement | null
-  const scrollRef = useRef<HTMLElement>(null)
+  // 👇 importante: HTMLElement, con non-null assertion
+  const scrollRef = useRef<HTMLElement>(null!)
   const [activeIndex, setActiveIndex] = useState(-1)
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -124,10 +121,7 @@ export function ScrollTimeline({
           ? index * 0.2
           : index * 0.3
 
-    const initialStates: Record<
-      RevealAnimationKey,
-      Record<string, unknown>
-    > = {
+    const initialStates = {
       fade: { opacity: 0, y: 20 },
       slide: {
         x:
@@ -143,7 +137,7 @@ export function ScrollTimeline({
       scale: { scale: 0.8, opacity: 0 },
       flip: { rotateY: 90, opacity: 0 },
       none: { opacity: 1 },
-    }
+    } as const
 
     return {
       initial: initialStates[revealAnimation],
