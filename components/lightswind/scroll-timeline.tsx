@@ -85,12 +85,13 @@ export function ScrollTimeline({
   darkMode = false,
   smoothScroll = true,
 }: ScrollTimelineProps) {
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement | null>(null)
   const [activeIndex, setActiveIndex] = useState(-1)
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([])
 
+  // 👇 Cast explícito al tipo que espera useScroll
   const { scrollYProgress } = useScroll({
-    target: scrollRef,
+    target: scrollRef as React.RefObject<HTMLElement>,
     offset: ["start start", "end end"],
   })
 
@@ -120,7 +121,10 @@ export function ScrollTimeline({
           ? index * 0.2
           : index * 0.3
 
-    const initialStates = {
+    const initialStates: Record<
+      ScrollTimelineProps["revealAnimation"],
+      Record<string, unknown>
+    > = {
       fade: { opacity: 0, y: 20 },
       slide: {
         x:
@@ -200,9 +204,7 @@ export function ScrollTimeline({
     >
       <div className="text-center py-16 px-4">
         <h2 className="text-3xl md:text-5xl font-bold mb-4">{title}</h2>
-        {subtitle && (
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>}
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 pb-24">
@@ -285,6 +287,7 @@ export function ScrollTimeline({
                         : "lg:flex-row-reverse lg:justify-start",
                   )}
                 >
+                  {/* Nodo central */}
                   <div
                     className={cn(
                       "absolute top-1/2 transform -translate-y-1/2 z-30",
@@ -317,6 +320,7 @@ export function ScrollTimeline({
                     />
                   </div>
 
+                  {/* Tarjeta */}
                   <motion.div
                     className={cn(getCardClasses(index), "mt-12 lg:mt-0")}
                     variants={getCardVariants(index)}
