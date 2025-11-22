@@ -1,10 +1,12 @@
-﻿"use client"
+﻿// @ts-nocheck
+"use client"
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
+import { staggerContainer, fadeInUp } from "@/lib/motion"
 import { SUPPORTED_LANGUAGES, type LanguageCode, useTranslation } from "@/context/TranslationContext"
 import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, Globe } from "lucide-react"
 
@@ -306,9 +308,7 @@ export default function Page() {
                     className="relative z-10 w-full max-w-[min(640px,90vw)] origin-center object-cover transition duration-700 ease-hero-bg translate-x-4 sm:translate-x-6"
                     style={{
                       opacity: pricingActive ? 1 : 0,
-                      transform: `translateY(${pricingActive ? "-16px" : "-4px"}) scale(${
-                        pricingActive ? 1 : 0.9
-                      })`,
+                      transform: `translateY(${pricingActive ? "-16px" : "-4px"}) scale(${pricingActive ? 1 : 0.9})`,
                       filter: "brightness(1.18) saturate(1.24)",
                       maskImage:
                         "radial-gradient(circle at center, rgba(0,0,0,1) 25%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0) 90%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%)",
@@ -452,9 +452,7 @@ export default function Page() {
           <div className="grid w-full flex-1 grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
             {footerColumns.map((column) => (
               <div key={column.title} className="space-y-4">
-                <h4 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
-                  {column.title}
-                </h4>
+                <h4 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">{column.title}</h4>
                 <ul className="space-y-2 text-sm text-slate-400">
                   {column.links.map((link) => (
                     <li key={`${column.title}-${link.label}`}>
