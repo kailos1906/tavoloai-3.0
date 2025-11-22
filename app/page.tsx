@@ -1,10 +1,10 @@
 ﻿"use client"
+
 import { Fragment, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
-import { staggerContainer, fadeInUp } from "@/lib/motion"
 import { SUPPORTED_LANGUAGES, type LanguageCode, useTranslation } from "@/context/TranslationContext"
 import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, Globe } from "lucide-react"
 
@@ -126,7 +126,17 @@ export default function Page() {
         ],
       },
     ],
-    [dictionary.beforeAfter.title, dictionary.cases.title, dictionary.features.items, dictionary.faq.title, dictionary.pricing.title, dictionary.sectionActions.infoLabel, dictionary.sectionActions.primaryCta, dictionary.demo.title, navLinks],
+    [
+      dictionary.beforeAfter.title,
+      dictionary.cases.title,
+      dictionary.features.items,
+      dictionary.faq.title,
+      dictionary.pricing.title,
+      dictionary.sectionActions.infoLabel,
+      dictionary.sectionActions.primaryCta,
+      dictionary.demo.title,
+      navLinks,
+    ],
   )
 
   const languageOptions = SUPPORTED_LANGUAGES.map((option) => ({
@@ -296,7 +306,9 @@ export default function Page() {
                     className="relative z-10 w-full max-w-[min(640px,90vw)] origin-center object-cover transition duration-700 ease-hero-bg translate-x-4 sm:translate-x-6"
                     style={{
                       opacity: pricingActive ? 1 : 0,
-                      transform: `translateY(${pricingActive ? "-16px" : "-4px"}) scale(${pricingActive ? 1 : 0.9})`,
+                      transform: `translateY(${pricingActive ? "-16px" : "-4px"}) scale(${
+                        pricingActive ? 1 : 0.9
+                      })`,
                       filter: "brightness(1.18) saturate(1.24)",
                       maskImage:
                         "radial-gradient(circle at center, rgba(0,0,0,1) 25%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0) 90%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%)",
@@ -380,10 +392,9 @@ export default function Page() {
             )}
           </Fragment>
         ))}
-
       </div>
 
-       <motion.footer
+      <motion.footer
         variants={sectionVariants}
         viewport={{ once: true, amount: 0.4 }}
         initial="hidden"
@@ -396,67 +407,67 @@ export default function Page() {
               <Image src="/logorojo.png" alt="TavoloAI" width={150} height={150} className="h-12 w-12 object-contain" />
               <div>
                 <p className="text-base font-semibold text-white">TavoloAI</p>
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Menu Intelligence</p>
-                </div>
-              </div>
-              <p className="text-sm leading-relaxed text-slate-400">{dictionary.hero.description}</p>
-              <div className="relative w-fit" ref={langMenuRef}>
-                <motion.button
-                  type="button"
-                  aria-label={t("header.languageButton")}
-                  onClick={() => setShowLangMenu((prev) => !prev)}
-                  className="mt-2 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[12px] font-medium text-slate-200 shadow-sm transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <Globe className="h-4 w-4" />
-                  <span>{currentLanguageLabel}</span>
-                </motion.button>
-
-                {showLangMenu && (
-                  <motion.ul
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.16 }}
-                    className="absolute left-0 bottom-full mb-2 w-40 overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/95 backdrop-blur-xl shadow-lg shadow-black/40 z-20"
-                  >
-                    {languageOptions.map((option) => (
-                      <motion.li
-                        key={option.code}
-                        whileHover={{ backgroundColor: "rgba(255,255,255,0.07)" }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`cursor-pointer px-3.5 py-1.5 text-[12px] font-medium text-slate-200 transition-colors ${
-                          option.code === language ? "text-white" : ""
-                        }`}
-                        onClick={() => handleLanguageChange(option.code)}
-                      >
-                        {option.label}
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-                )}
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Menu Intelligence</p>
               </div>
             </div>
+            <p className="text-sm leading-relaxed text-slate-400">{dictionary.hero.description}</p>
+            <div className="relative w-fit" ref={langMenuRef}>
+              <motion.button
+                type="button"
+                aria-label={t("header.languageButton")}
+                onClick={() => setShowLangMenu((prev) => !prev)}
+                className="mt-2 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[12px] font-medium text-slate-200 shadow-sm transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <Globe className="h-4 w-4" />
+                <span>{currentLanguageLabel}</span>
+              </motion.button>
 
-            <div className="grid w-full flex-1 grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
-              {footerColumns.map((column) => (
-                <div key={column.title} className="space-y-4">
-                  <h4 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
-                    {column.title}
-                  </h4>
-                  <ul className="space-y-2 text-sm text-slate-400">
-                    {column.links.map((link) => (
-                      <li key={`${column.title}-${link.label}`}>
-                        <a href={link.href} className="transition-colors duration-150 hover:text-white">
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              {showLangMenu && (
+                <motion.ul
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.16 }}
+                  className="absolute left-0 bottom-full mb-2 w-40 overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/95 backdrop-blur-xl shadow-lg shadow-black/40 z-20"
+                >
+                  {languageOptions.map((option) => (
+                    <motion.li
+                      key={option.code}
+                      whileHover={{ backgroundColor: "rgba(255,255,255,0.07)" }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`cursor-pointer px-3.5 py-1.5 text-[12px] font-medium text-slate-200 transition-colors ${
+                        option.code === language ? "text-white" : ""
+                      }`}
+                      onClick={() => handleLanguageChange(option.code)}
+                    >
+                      {option.label}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              )}
             </div>
           </div>
+
+          <div className="grid w-full flex-1 grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+            {footerColumns.map((column) => (
+              <div key={column.title} className="space-y-4">
+                <h4 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+                  {column.title}
+                </h4>
+                <ul className="space-y-2 text-sm text-slate-400">
+                  {column.links.map((link) => (
+                    <li key={`${column.title}-${link.label}`}>
+                      <a href={link.href} className="transition-colors duration-150 hover:text-white">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="relative z-10 mx-auto mt-12 flex w-full flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
@@ -497,4 +508,3 @@ export default function Page() {
     </motion.div>
   )
 }
-
