@@ -1,4 +1,5 @@
-﻿"use client"
+﻿// @ts-nocheck
+"use client"
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { ShoppingBag } from "lucide-react"

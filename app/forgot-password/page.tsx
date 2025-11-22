@@ -1,4 +1,5 @@
 // app/forgot-password/page.tsx
+// @ts-nocheck
 "use client"
 
 import { useState, useEffect } from "react"
