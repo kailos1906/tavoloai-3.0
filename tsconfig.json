@@ -21,11 +21,6 @@
     "esModuleInterop": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": [
-      "node",
-      "react",
-      "react-dom"
-    ],
     "baseUrl": ".",
     "paths": {
       "@/*": [
