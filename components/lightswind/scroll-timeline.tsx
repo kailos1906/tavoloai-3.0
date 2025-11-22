@@ -42,8 +42,6 @@ export interface ScrollTimelineProps {
   smoothScroll?: boolean
 }
 
-type RevealAnimation = NonNullable<ScrollTimelineProps["revealAnimation"]>
-
 const DEFAULT_EVENTS: TimelineEvent[] = [
   {
     year: "2023",
@@ -64,6 +62,9 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
     description: "Information about this key event in the timeline.",
   },
 ]
+
+// claves válidas para initialStates
+type RevealAnimationKey = NonNullable<ScrollTimelineProps["revealAnimation"]>
 
 export function ScrollTimeline({
   events = DEFAULT_EVENTS,
@@ -87,7 +88,8 @@ export function ScrollTimeline({
   darkMode = false,
   smoothScroll = true,
 }: ScrollTimelineProps) {
-  const scrollRef = useRef<HTMLDivElement | null>(null)
+  // 👈 aquí el cambio clave: HTMLElement, NO HTMLDivElement | null
+  const scrollRef = useRef<HTMLElement>(null)
   const [activeIndex, setActiveIndex] = useState(-1)
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -122,7 +124,10 @@ export function ScrollTimeline({
           ? index * 0.2
           : index * 0.3
 
-    const initialStates: Record<RevealAnimation, Record<string, unknown>> = {
+    const initialStates: Record<
+      RevealAnimationKey,
+      Record<string, unknown>
+    > = {
       fade: { opacity: 0, y: 20 },
       slide: {
         x:
@@ -140,10 +145,8 @@ export function ScrollTimeline({
       none: { opacity: 1 },
     }
 
-    const animationKey: RevealAnimation = revealAnimation ?? "fade"
-
     return {
-      initial: initialStates[animationKey],
+      initial: initialStates[revealAnimation],
       whileInView: {
         opacity: 1,
         y: 0,
@@ -195,7 +198,7 @@ export function ScrollTimeline({
 
   return (
     <div
-      ref={scrollRef}
+      ref={scrollRef as React.RefObject<HTMLDivElement>}
       className={cn(
         "relative min-h-screen w-full overflow-hidden",
         darkMode ? "bg-background text-foreground" : "",
