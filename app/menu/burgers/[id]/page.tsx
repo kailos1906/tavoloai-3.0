@@ -492,7 +492,8 @@ export default function BurgerDetailPage() {
 
     useEffect(() => {
         if (!burgerId) {
-            setCurrentBurger(burgers[0])
+            // <-- aquí está el cambio: nunca pasamos undefined al state
+            setCurrentBurger(burgers[0] ?? null)
             return
         }
 
@@ -727,12 +728,12 @@ export default function BurgerDetailPage() {
                                 animate={
                                     starIndex <= rating
                                         ? {
-                                              filter: [
-                                                  "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))",
-                                                  "drop-shadow(0 0 15px rgba(255, 215, 0, 0.8))",
-                                                  "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))",
-                                              ],
-                                          }
+                                            filter: [
+                                                "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))",
+                                                "drop-shadow(0 0 15px rgba(255, 215, 0, 0.8))",
+                                                "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))",
+                                            ],
+                                        }
                                         : {}
                                 }
                                 transition={{ duration: 0.5 }}
