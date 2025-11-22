@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-};
 
-module.exports = nextConfig;
+  // Workaround para evitar el crash en "Collecting build traces" en Vercel
+  // (desactiva el file tracing avanzado del lado del servidor)
+  outputFileTracing: false,
+}
+
+module.exports = nextConfig
