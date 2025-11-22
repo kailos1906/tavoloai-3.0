@@ -42,6 +42,8 @@ export interface ScrollTimelineProps {
   smoothScroll?: boolean
 }
 
+type RevealAnimation = NonNullable<ScrollTimelineProps["revealAnimation"]>
+
 const DEFAULT_EVENTS: TimelineEvent[] = [
   {
     year: "2023",
@@ -89,9 +91,8 @@ export function ScrollTimeline({
   const [activeIndex, setActiveIndex] = useState(-1)
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // 👇 Cast explícito al tipo que espera useScroll
   const { scrollYProgress } = useScroll({
-    target: scrollRef as React.RefObject<HTMLElement>,
+    target: scrollRef,
     offset: ["start start", "end end"],
   })
 
@@ -121,10 +122,7 @@ export function ScrollTimeline({
           ? index * 0.2
           : index * 0.3
 
-    const initialStates: Record<
-      ScrollTimelineProps["revealAnimation"],
-      Record<string, unknown>
-    > = {
+    const initialStates: Record<RevealAnimation, Record<string, unknown>> = {
       fade: { opacity: 0, y: 20 },
       slide: {
         x:
@@ -142,8 +140,10 @@ export function ScrollTimeline({
       none: { opacity: 1 },
     }
 
+    const animationKey: RevealAnimation = revealAnimation ?? "fade"
+
     return {
-      initial: initialStates[revealAnimation],
+      initial: initialStates[animationKey],
       whileInView: {
         opacity: 1,
         y: 0,
@@ -287,7 +287,6 @@ export function ScrollTimeline({
                         : "lg:flex-row-reverse lg:justify-start",
                   )}
                 >
-                  {/* Nodo central */}
                   <div
                     className={cn(
                       "absolute top-1/2 transform -translate-y-1/2 z-30",
@@ -320,7 +319,6 @@ export function ScrollTimeline({
                     />
                   </div>
 
-                  {/* Tarjeta */}
                   <motion.div
                     className={cn(getCardClasses(index), "mt-12 lg:mt-0")}
                     variants={getCardVariants(index)}
