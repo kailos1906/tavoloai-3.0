@@ -491,9 +491,10 @@ export default function BurgerDetailClient({ burgerId }: BurgerDetailClientProps
     const [hoveredStar, setHoveredStar] = useState(0)
     const [isMobile, setIsMobile] = useState(false)
 
+    // Elegir hamburguesa según burgerId
     useEffect(() => {
         if (!burgerId) {
-            setCurrentBurger(burgers[0])
+            setCurrentBurger(burgers[0] ?? null)
             return
         }
 
@@ -507,6 +508,7 @@ export default function BurgerDetailClient({ burgerId }: BurgerDetailClientProps
         setCurrentBurger(foundBurger)
     }, [burgerId, router])
 
+    // Detectar viewport (mobile / desktop)
     useEffect(() => {
         const evaluateViewport = () => {
             if (typeof window === "undefined") return
