@@ -1,10 +1,13 @@
-﻿// @ts-nocheck
-"use client"
+﻿"use client";
+// @ts-nocheck
 
 import { motion } from "framer-motion"
 import Image, { StaticImageData } from "next/image"
 import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
+
+export const dynamic = "force-dynamic"
+
 
 import fourMeatPlantain from "@/public/4-meat-burger-with-plantain-bun.jpg"
 import fourMeatRegular from "@/public/4-meat-burger-with-regular-bun.jpg"
@@ -82,6 +85,7 @@ export default function BurgersPage() {
     )
 
     const [activeDietaryFilters, setActiveDietaryFilters] = useState<string[]>([])
+    const [isFilterBarOpen, setIsFilterBarOpen] = useState(false)
 
     const dietaryFilterLookup = useMemo(
         () => Object.fromEntries(dietaryFilters.map((filter) => [filter.id, filter])),
@@ -122,7 +126,7 @@ export default function BurgersPage() {
     }
 
     const handleFilter = () => {
-        console.log("[v0] Filter button clicked")
+        setIsFilterBarOpen((prev) => !prev)
     }
 
     const handleShare = () => {
@@ -187,13 +191,70 @@ export default function BurgersPage() {
             textAlign: "center" as const,
             letterSpacing: "1px",
         },
+        filterModalOverlay: {
+            position: "fixed" as const,
+            inset: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 150,
+            padding: "1.25rem",
+        },
+        filterModalCard: {
+            width: "min(420px, 100%)",
+            backgroundColor: "rgba(15, 15, 15, 0.97)",
+            borderRadius: "18px",
+            padding: "1.25rem 1.5rem",
+            boxShadow: "0 22px 45px rgba(0, 0, 0, 0.6)",
+            border: "1px solid rgba(255, 255, 255, 0.18)",
+        },
+        filterModalHeader: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "0.75rem",
+        },
+        filterModalTitle: {
+            color: "#fff",
+            fontSize: "0.95rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase" as const,
+        },
+        filterModalClose: {
+            background: "transparent",
+            border: "none",
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "0.85rem",
+            cursor: "pointer",
+        },
+        filterModalActions: {
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "0.75rem",
+            marginTop: "1rem",
+        },
+        filterModalApply: {
+            padding: "0.55rem 1.25rem",
+            borderRadius: "9999px",
+            border: "none",
+            background:
+                "linear-gradient(120deg, rgba(255, 215, 0, 0.95), rgba(255, 153, 0, 0.95))",
+            color: "#000",
+            fontWeight: 700,
+            fontSize: "0.8rem",
+            letterSpacing: "0.08em",
+            cursor: "pointer",
+            textTransform: "uppercase" as const,
+        },
         filterBar: {
             display: "flex",
-            flexWrap: "wrap" as const,
-            gap: "0.75rem",
+            flexDirection: "column" as const,
+            gap: "0.6rem",
+            alignItems: "stretch",
             justifyContent: "center",
-            padding: "0 1.25rem",
-            marginBottom: "clamp(0.75rem, 3vw, 1.25rem)",
+            marginTop: "0.5rem",
         },
         filterChip: {
             display: "flex",
@@ -399,47 +460,85 @@ export default function BurgersPage() {
                     <h1 style={styles.title}>LAS PROPIAS BURGERS</h1>
                 </motion.header>
 
-                <motion.div
-                    style={styles.filterBar}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.45, ease: "easeOut" }}
-                >
-                    {dietaryFilters.map((filter) => {
-                        const isActive = activeDietaryFilters.includes(filter.id)
-                        return (
-                            <MotionButton
-                                key={filter.id}
-                                type="button"
-                                style={{
-                                    ...styles.filterChip,
-                                    ...(isActive ? styles.filterChipActive : {}),
-                                }}
-                                onClick={() => toggleDietaryFilter(filter.id)}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <span style={styles.filterChipIcon}>{filter.icon}</span>
-                                <span style={styles.filterChipCopy}>
-                                    <span style={styles.filterChipLabel}>{filter.label}</span>
-                                    <span style={styles.filterChipHelper}>{filter.helper}</span>
-                                </span>
-                            </MotionButton>
-                        )
-                    })}
-                    {hasActiveFilters && (
-                        <MotionButton
-                            key="clear-filters"
-                            type="button"
-                            style={styles.filterReset}
-                            onClick={clearDietaryFilters}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.94 }}
+                {isFilterBarOpen && (
+                    <motion.div
+                        style={styles.filterModalOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.25 }}
+                        onClick={() => setIsFilterBarOpen(false)}
+                    >
+                        <motion.div
+                            style={styles.filterModalCard}
+                            initial={{ scale: 0.9, opacity: 0, y: 10 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            onClick={(event) => event.stopPropagation()}
                         >
-                            Limpiar
-                        </MotionButton>
-                    )}
-                </motion.div>
+                            <div style={styles.filterModalHeader}>
+                                <span style={styles.filterModalTitle}>Filtros</span>
+                                <button
+                                    type="button"
+                                    style={styles.filterModalClose}
+                                    onClick={() => setIsFilterBarOpen(false)}
+                                >
+                                    Cerrar
+                                </button>
+                            </div>
+
+                            <div style={styles.filterBar}>
+                                {dietaryFilters.map((filter) => {
+                                    const isActive = activeDietaryFilters.includes(filter.id)
+                                    return (
+                                        <MotionButton
+                                            key={filter.id}
+                                            type="button"
+                                            style={{
+                                                ...styles.filterChip,
+                                                ...(isActive ? styles.filterChipActive : {}),
+                                            }}
+                                            onClick={() => toggleDietaryFilter(filter.id)}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <span style={styles.filterChipIcon}>{filter.icon}</span>
+                                            <span style={styles.filterChipCopy}>
+                                                <span style={styles.filterChipLabel}>
+                                                    {filter.label}
+                                                </span>
+                                                <span style={styles.filterChipHelper}>
+                                                    {filter.helper}
+                                                </span>
+                                            </span>
+                                        </MotionButton>
+                                    )
+                                })}
+                                {hasActiveFilters && (
+                                    <MotionButton
+                                        key="clear-filters"
+                                        type="button"
+                                        style={styles.filterReset}
+                                        onClick={clearDietaryFilters}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.94 }}
+                                    >
+                                        Limpiar
+                                    </MotionButton>
+                                )}
+                            </div>
+
+                            <div style={styles.filterModalActions}>
+                                <button
+                                    type="button"
+                                    style={styles.filterModalApply}
+                                    onClick={() => setIsFilterBarOpen(false)}
+                                >
+                                    Listo
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
 
                 {hasActiveFilters && (
                     <motion.span
