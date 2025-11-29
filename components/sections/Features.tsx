@@ -5,12 +5,12 @@ import Image, { type StaticImageData } from "next/image"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import fotosIaImage from "@/public/fotos-con-ia.png"
-import edicionImage from "@/public/edicion.png"
+import fotosIaImage from "@/public/fotos-con-ia.webp"
+import edicionImage from "@/public/edicion.webp"
 import promocionImage from "@/public/promocion.png"
-import ocultarImage from "@/public/ocultar.png"
-import filtrosImage from "@/public/filtros.png"
-import multiIdiomaImage from "@/public/multi-idioma.png"
+import ocultarImage from "@/public/ocultar.webp"
+import filtrosImage from "@/public/filtros.webp"
+import multiIdiomaImage from "@/public/multi-idioma.webp"
 import { useTranslation } from "@/context/TranslationContext"
 
 type FeatureSlide = {
@@ -68,8 +68,9 @@ function FeatureImage({ src, alt, priority = false }: { src?: StaticImageData; a
     <Image
       src={src}
       alt={alt ?? "preview"}
-      className="h-full w-full object-cover"
-      sizes="(max-width: 768px) 320px, 420px"
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 100vw, 560px"
       placeholder={src.blurDataURL ? "blur" : undefined}
       priority={priority}
     />
@@ -177,7 +178,7 @@ export default function SectionFeatures() {
               className="w-full max-w-5xl min-h-[520px] px-4 md:px-0"
             >
               <motion.div
-                className="relative mx-auto min-h-[520px] w-full max-w-5xl overflow-visible rounded-[30px] p-[1px]"
+                className="relative mx-auto h-[520px] w-full max-w-5xl overflow-visible rounded-[30px] p-[1px]"
                 style={{ background: GRADIENT, boxShadow: "0 45px 120px rgba(0,0,0,0.85)" }}
                 initial={false}
                 whileHover={{ y: -6, boxShadow: "0 55px 140px rgba(0,0,0,0.95)" }}
@@ -210,35 +211,35 @@ export default function SectionFeatures() {
                   }}
                 />
 
-                <div className="relative h-full overflow-visible rounded-[26px] border border-white/10 bg-[#060607]/95 backdrop-blur-lg">
+                <div className="relative h-full overflow-hidden rounded-[26px] border border-white/10 bg-[#060607]/95 backdrop-blur-lg">
                   <div className="pointer-events-none absolute inset-0 rounded-[26px] bg-gradient-to-br from-white/8 via-white/2 to-transparent" />
 
-                  <div className="relative z-10 grid gap-10 p-8 md:grid-cols-[1.05fr_1fr] md:p-10">
-                    <div className="flex h-full flex-col justify-between space-y-8">
-                      <div className="space-y-6">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1 text-[11px] font-medium uppercase tracking-[0.28em] text-slate-300">
-                          {currentSlide?.badge}
-                        </span>
-                        <h3 className="text-[32px] font-semibold text-white md:text-[36px]">
-                          {currentSlide?.title}
-                        </h3>
-                        <p className="text-base leading-relaxed text-slate-300 md:text-lg">
-                          {currentSlide?.description}
-                        </p>
-                      </div>
+                  <div className="absolute inset-y-0 right-0 w-full md:w-[52%]">
+                    <div className="relative h-full w-full">
+                      <FeatureImage src={currentSlide?.image} alt={currentSlide?.title} priority />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                    </div>
+                  </div>
 
-                      <div className="flex items-center justify-between text-sm text-slate-400">
-                        <span>{t("sectionActions.infoLabel")}</span>
-                        <button className="inline-flex items-center gap-2 text-white transition-colors hover:text-white/80">
-                          {t("sectionActions.primaryCta")}
-                          <span aria-hidden>{"\u2192"}</span>
-                        </button>
-                      </div>
+                  <div className="relative z-10 flex h-full flex-col justify-between space-y-8 p-8 md:max-w-[50%] md:p-10">
+                    <div className="space-y-6">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1 text-[11px] font-medium uppercase tracking-[0.28em] text-slate-300">
+                        {currentSlide?.badge}
+                      </span>
+                      <h3 className="text-[32px] font-semibold text-white md:text-[36px]">
+                        {currentSlide?.title}
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-300 md:text-lg">
+                        {currentSlide?.description}
+                      </p>
                     </div>
 
-                    <div className="relative overflow-visible rounded-[24px] border border-white/10 bg-gradient-to-br from-black/70 via-[#0f0f0f]/80 to-[#151515]/60 shadow-[0_35px_70px_rgba(0,0,0,0.55)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                      <FeatureImage src={currentSlide?.image} alt={currentSlide?.title} priority />
+                    <div className="flex items-center justify-between text-sm text-slate-400">
+                      <span>{t("sectionActions.infoLabel")}</span>
+                      <button className="inline-flex items-center gap-2 text-white transition-colors hover:text-white/80">
+                        {t("sectionActions.primaryCta")}
+                        <span aria-hidden>{"\u2192"}</span>
+                      </button>
                     </div>
                   </div>
                 </div>

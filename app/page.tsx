@@ -23,9 +23,9 @@ const SectionFinalCTA = dynamic(() => import("@/components/sections/FinalCTA"))
 const sectionVariants = {
   hidden: {
     opacity: 0,
-    y: 24,
-    scale: 0.99,
-    filter: "blur(4px)",
+    y: 18,
+    scale: 0.995,
+    filter: "blur(6px)",
   },
   visible: {
     opacity: 1,
@@ -34,8 +34,8 @@ const sectionVariants = {
     filter: "blur(0px)",
     transition: {
       type: "tween",
-      duration: 0.7,
-      ease: [0.55, 0.1, 0.35, 1],
+      duration: 0.5,
+      ease: [0.22, 0.9, 0.3, 1],
     },
   },
 }
@@ -45,10 +45,10 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.6,
-      ease: [0.55, 0.1, 0.35, 1],
-      staggerChildren: 0.18,
-      delayChildren: 0.12,
+      duration: 0.5,
+      ease: [0.22, 0.9, 0.3, 1],
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
       when: "beforeChildren",
     },
   },

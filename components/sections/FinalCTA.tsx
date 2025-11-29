@@ -10,22 +10,18 @@ const subtleStaggerContainer = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.08,
-      ease: [0.55, 0.1, 0.35, 1],
+      staggerChildren: 0.08,
+      delayChildren: 0.04,
     },
   },
 }
 
 const subtleFadeInUp = {
-  hidden: { opacity: 0, y: 24, scale: 0.985, filter: "blur(4px)", rotateX: 4 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    rotateX: 0,
-    transition: { duration: 0.7, ease: [0.55, 0.1, 0.35, 1] },
+    transition: { duration: 0.4, ease: [0.25, 0.8, 0.35, 1] },
   },
 }
 

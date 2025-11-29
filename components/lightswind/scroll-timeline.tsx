@@ -24,6 +24,12 @@ export interface ScrollTimelineProps {
   events: TimelineEvent[]
   title?: string
   subtitle?: string
+  sideNoteTitle?: string
+  sideNote?: string
+  sideNote2Title?: string
+  sideNote2?: string
+  sideNote3Title?: string
+  sideNote3?: string
   animationOrder?: "sequential" | "staggered" | "simultaneous"
   cardAlignment?: "alternating" | "left" | "right"
   lineColor?: string
@@ -68,6 +74,12 @@ export function ScrollTimeline({
   events = DEFAULT_EVENTS,
   title = "Timeline",
   subtitle,
+  sideNoteTitle,
+  sideNote,
+  sideNote2Title,
+  sideNote2,
+  sideNote3Title,
+  sideNote3,
   animationOrder = "sequential",
   cardAlignment = "alternating",
   lineColor = "bg-primary/30",
@@ -363,6 +375,39 @@ export function ScrollTimeline({
                       </article>
                     </div>
                   </motion.div>
+
+                  {index === 0 && sideNote && (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] px-8 lg:flex items-center">
+                      <div>
+                        <h3 className="mb-2 text-left text-base md:text-lg font-semibold uppercase tracking-[0.22em] text-slate-400 whitespace-nowrap">
+                          {sideNoteTitle}
+                        </h3>
+                        <p className="text-left text-base leading-relaxed text-slate-300">{sideNote}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 1 && sideNote2 && (
+                    <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[46%] px-8 lg:flex items-center justify-end">
+                      <div>
+                        <h3 className="mb-2 text-right text-base md:text-lg font-semibold uppercase tracking-[0.22em] text-slate-400 whitespace-nowrap">
+                          {sideNote2Title}
+                        </h3>
+                        <p className="text-right text-base leading-relaxed text-slate-300">{sideNote2}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 2 && sideNote3 && (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] px-8 lg:flex items-center">
+                      <div>
+                        <h3 className="mb-2 text-left text-base md:text-lg font-semibold uppercase tracking-[0.22em] text-slate-400 whitespace-nowrap">
+                          {sideNote3Title}
+                        </h3>
+                        <p className="text-left text-base leading-relaxed text-slate-300">{sideNote3}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
             })}

@@ -84,6 +84,7 @@ export default function BurgersPage() {
         []
     )
 
+    const [searchQuery, setSearchQuery] = useState("")
     const [activeDietaryFilters, setActiveDietaryFilters] = useState<string[]>([])
     const [isFilterBarOpen, setIsFilterBarOpen] = useState(false)
 
@@ -93,14 +94,37 @@ export default function BurgersPage() {
     )
 
     const filteredProducts = useMemo(() => {
-        if (activeDietaryFilters.length === 0) {
-            return products
+        let result = products
+
+        if (activeDietaryFilters.length > 0) {
+            result = result.filter((product) =>
+                activeDietaryFilters.every((filterId) => product.tags.includes(filterId))
+            )
         }
 
-        return products.filter((product) =>
-            activeDietaryFilters.every((filterId) => product.tags.includes(filterId))
-        )
-    }, [activeDietaryFilters, products])
+        const trimmedQuery = searchQuery.trim().toLowerCase()
+        if (trimmedQuery.length > 0) {
+            result = result.filter((product) => {
+                if (product.name.toLowerCase().includes(trimmedQuery)) return true
+
+                if (product.tags.some((tag) => tag.toLowerCase().includes(trimmedQuery))) return true
+
+                if (
+                    product.variants.some(
+                        (variant) =>
+                            variant.type.toLowerCase().includes(trimmedQuery) ||
+                            variant.location.toLowerCase().includes(trimmedQuery),
+                    )
+                ) {
+                    return true
+                }
+
+                return false
+            })
+        }
+
+        return result
+    }, [activeDietaryFilters, products, searchQuery])
 
     const hasActiveFilters = activeDietaryFilters.length > 0
     const hasResults = filteredProducts.length > 0
@@ -307,7 +331,21 @@ export default function BurgersPage() {
             fontSize: "0.8rem",
             color: "rgba(255, 255, 255, 0.75)",
             textAlign: "center" as const,
-            marginBottom: "0.75rem",
+            marginBottom: "0.5rem",
+        },
+        searchBar: {
+            padding: "0 1rem",
+            marginBottom: "0.25rem",
+        },
+        searchInput: {
+            width: "100%",
+            padding: "0.6rem 0.9rem",
+            borderRadius: "9999px",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            color: "#fff",
+            fontSize: "0.9rem",
+            outline: "none",
         },
         productsGrid: {
             display: "grid",
@@ -550,6 +588,16 @@ export default function BurgersPage() {
                         Filtrando: {activeFilterSummary}
                     </motion.span>
                 )}
+
+                <div style={styles.searchBar}>
+                    <input
+                        type="text"
+                        placeholder="Buscar burger o local..."
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                        style={styles.searchInput}
+                    />
+                </div>
 
                 <div style={styles.productsGrid}>
                     {hasResults ? (

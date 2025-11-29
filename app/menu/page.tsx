@@ -54,6 +54,7 @@ export default function HomePage() {
     const prefersReducedMotion = useReducedMotion()
     const [isMobileViewport, setIsMobileViewport] = useState(false)
     const [showIntro, setShowIntro] = useState(true)
+    const [searchQuery, setSearchQuery] = useState("")
 
     const handleCategoryClick = (categoryId: string) => {
         setSelectedCategory(categoryId)
@@ -118,6 +119,17 @@ export default function HomePage() {
             },
         },
     }
+
+    const burgersProducts = [
+        { id: "1", name: "Triple BBQ Ribs", price: "$40.000", image: tripleBbqBeef },
+        { id: "2", name: "4 Carnes", price: "$40.000", image: fourMeatRegular },
+        { id: "3", name: "Onion Rings", price: "$26.000", image: burgerOnionRegular },
+        { id: "4", name: "Crispy Bacon", price: "$28.000", image: crispyBaconRegular },
+    ] as const
+
+    const filteredBurgers = burgersProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
 
     useEffect(() => {
         if (prefersReducedMotion) {
@@ -281,6 +293,21 @@ export default function HomePage() {
                     </motion.div>
 
                     <motion.div
+                        style={styles.searchWrapper}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                    >
+                        <input
+                            type="text"
+                            placeholder="Buscar categoría..."
+                            value={searchQuery}
+                            onChange={(event) => setSearchQuery(event.target.value)}
+                            style={styles.searchInput}
+                        />
+                    </motion.div>
+
+                    <motion.div
                         style={styles.grid}
                         variants={containerVariants}
                         initial="hidden"
@@ -324,6 +351,40 @@ export default function HomePage() {
                             </MotionButton>
                         ))}
                     </motion.div>
+
+                    {searchQuery.trim().length > 0 && (
+                        <motion.div
+                            style={styles.productsSection}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.8 }}
+                        >
+                            <h3 style={styles.productsTitle}>BURGERS</h3>
+                            <div style={styles.productsGrid}>
+                                {filteredBurgers.map((product) => (
+                                    <motion.div
+                                        key={product.id}
+                                        style={styles.productCard}
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.97 }}
+                                    >
+                                        <div style={styles.productImageWrapper}>
+                                            <MotionImage
+                                                src={product.image}
+                                                alt={product.name}
+                                                style={styles.productImage}
+                                                whileHover={{ scale: 1.05 }}
+                                            />
+                                        </div>
+                                        <div style={styles.productInfo}>
+                                            <span style={styles.productName}>{product.name}</span>
+                                            <span style={styles.productPrice}>{product.price}</span>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
 
                     <motion.div
                         style={styles.motivationText}
@@ -558,6 +619,22 @@ const styles: { [key: string]: React.CSSProperties } = {
         fontStyle: 'italic',
         textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)',
     },
+    searchWrapper: {
+        width: '100%',
+        maxWidth: '820px',
+        marginBottom: '1.5rem',
+    },
+    searchInput: {
+        width: '100%',
+        padding: '0.7rem 1rem',
+        borderRadius: '9999px',
+        border: '1px solid rgba(255, 255, 255, 0.25)',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        color: '#fff',
+        fontSize: '0.95rem',
+        outline: 'none',
+        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.4)',
+    },
     grid: {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))',
@@ -608,6 +685,61 @@ const styles: { [key: string]: React.CSSProperties } = {
         fontWeight: 700,
         textAlign: 'center',
         letterSpacing: '1px',
+    },
+    productsSection: {
+        width: '100%',
+        maxWidth: '820px',
+        marginBottom: '2rem',
+    },
+    productsTitle: {
+        fontSize: '1.1rem',
+        fontWeight: 700,
+        letterSpacing: '0.12rem',
+        textTransform: 'uppercase',
+        marginBottom: '0.75rem',
+    },
+    productsGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+        gap: 'clamp(0.75rem, 3vw, 1.1rem)',
+    },
+    productCard: {
+        background: 'rgba(0, 0, 0, 0.7)',
+        borderRadius: '16px',
+        border: '1px solid rgba(255, 255, 255, 0.18)',
+        padding: '0.75rem',
+        boxShadow: '0 10px 24px rgba(0, 0, 0, 0.45)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '0.5rem',
+    },
+    productImageWrapper: {
+        width: '100%',
+        maxWidth: '160px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+    },
+    productImage: {
+        width: '100%',
+        height: 'auto',
+        objectFit: 'cover',
+    },
+    productInfo: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '0.25rem',
+    },
+    productName: {
+        fontSize: '0.95rem',
+        fontWeight: 600,
+        textAlign: 'center',
+    },
+    productPrice: {
+        fontSize: '0.9rem',
+        fontWeight: 700,
+        color: '#FFD700',
     },
     motivationText: {
         fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',

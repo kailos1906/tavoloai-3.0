@@ -51,6 +51,12 @@ type TranslationDictionary = {
       title: string
       description: string
     }>
+    sideNoteTitle: string
+    sideNote: string
+    sideNote2Title: string
+    sideNote2: string
+    sideNote3Title: string
+    sideNote3: string
   }
   beforeAfter: {
     title: string
@@ -109,7 +115,7 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
   es: {
     header: {
       languageButton: "Idioma",
-      login: "Iniciar sesión",
+      login: "Iniciar sesion",
       signup: "Registrarse",
       nav: {
         features: "Funciones",
@@ -120,8 +126,8 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         faq: "Ayuda",
       },
       languages: {
-        es: "Español",
-        en: "Inglés",
+        es: "Espanol",
+        en: "Ingles",
         it: "Italiano",
       },
     },
@@ -130,11 +136,11 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     },
     hero: {
       tagline: "Demo en vivo",
-      title: "Tu menú, más inteligente que nunca.",
+      title: "Tu menu, mas inteligente que nunca.",
       description: "Edita en segundos, mejora fotos y comparte promociones con IA.",
       primaryCta: "Empezar gratis",
-      secondaryCta: "Ver cómo funciona",
-      trial: "7 días gratis · sin tarjeta · cancela cuando quieras.",
+      secondaryCta: "Ver como funciona",
+      trial: "7 dias gratis, sin tarjeta, cancela cuando quieras.",
       liveBadge: "Demo en vivo",
     },
     features: {
@@ -142,19 +148,19 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       items: [
         {
           title: "Fotos con IA",
-          badge: "Más ventas",
+          badge: "Mas ventas",
           description:
-            "Sube fotos desde tu celular y haz que luzcan profesionales usando la Inteligencia Artificial con un solo clic.",
+            "Sube fotos desde tu celular y haz que luzcan profesionales usando IA en un solo clic.",
         },
         {
-          title: "Edición instantánea",
+          title: "Edicion instantanea",
           badge: "Ahorra tiempo",
-          description: "Edita fácilmente el menú del día: cambia precios, orden y fotos en segundos.",
+          description: "Edita facilmente el menu del dia: cambia precios, orden y fotos en segundos.",
         },
         {
-          title: "Promoción en redes",
+          title: "Promocion en redes",
           badge: "Listo en 5 s",
-          description: "Crea publicidad para tu restaurante y compártela en redes sociales con un toque de IA.",
+          description: "Crea publicidad para tu restaurante y compartela en redes sociales con IA.",
         },
         {
           title: "Ocultar platos al instante",
@@ -164,12 +170,12 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         {
           title: "Filtros inteligentes",
           badge: "Mejor experiencia",
-          description: "Opciones sin gluten, veganas y más con filtros automáticos inteligentes.",
+          description: "Opciones sin gluten, veganas y mas con filtros automaticos.",
         },
         {
-          title: "Multi-idioma automático",
-          badge: "Sin fricción",
-          description: "Traduce tu menú al instante en español, inglés o italiano.",
+          title: "Multi idioma automatico",
+          badge: "Sin friccion",
+          description: "Traduce tu menu al instante a espanol, ingles o italiano.",
         },
       ],
       prevLabel: "Anterior",
@@ -180,33 +186,42 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       title: "De fotos a ventas en 3 pasos",
       steps: [
         {
-          title: "Crea tu menú",
+          title: "Crea tu menu",
           description: "Sube fotos y precios.",
         },
         {
           title: "Mejora con IA",
-          description: "Imágenes y textos optimizados automáticamente.",
+          description: "Imagenes y textos optimizados automaticamente.",
         },
         {
           title: "Comparte y mide",
-          description: "QR en mesa, banners listos y estadísticas en vivo.",
+          description: "QR en mesa, banners listos y estadisticas en vivo.",
         },
       ],
+      sideNoteTitle: "Tu carta lista en minutos",
+      sideNote:
+        "Convierte tus platos en un menu digital apetitoso en minutos, sin disenadores ni complicaciones.",
+      sideNote2Title: "Haz que todo se vea irresistible",
+      sideNote2:
+        "La IA pule fotos y descripciones para que cada plato luzca profesional y apetitoso.",
+      sideNote3Title: "Lanza, observa y vende mas",
+      sideNote3:
+        "Comparte tu menu con un clic, reparte QR en mesa y analiza en tiempo real que funciona mejor.",
     },
     beforeAfter: {
-      title: "El poder de la IA en tu menú",
+      title: "El poder de la IA en tu menu",
       beforeLabel: "Antes",
-      afterLabel: "Después · +23% clics",
-      sliderAria: "Comparar antes y después",
+      afterLabel: "Despues · +23% clics",
+      sliderAria: "Comparar antes y despues",
     },
     cases: {
-      title: "Restaurantes que ya venden más",
-      carouselRole: "carrusel de casos de éxito",
+      title: "Restaurantes que ya venden mas",
+      carouselRole: "Carrusel de casos de exito",
       cards: [
         {
           name: "Trattoria Roma",
           result: "+18% ventas del plato destacado (2 semanas)",
-          quote: "Ahora destacamos el plato del día y vuela.",
+          quote: "Ahora destacamos el plato del dia y vuela.",
         },
         {
           name: "Bar Costa",
@@ -216,78 +231,65 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         {
           name: "La Esquina",
           result: "+22% en pedidos por mesa (1 mes)",
-          quote: "La carta actualizada impulsó nuestras reservas.",
-        },
-        {
-          name: "Bistro Luna",
-          result: "+12% upsell en postres",
-          quote: "Los clientes piden más postres ahora.",
-        },
-        {
-          name: "Cafe Verde",
-          result: "+9% repetición semanal",
-          quote: "Los clientes vuelven por la nueva carta.",
+          quote: "La carta actualizada impulso nuestras reservas.",
         },
       ],
     },
     pricing: {
       title: "Un solo plan, todo incluido.",
-      subtitle: "Con un solo plato extra vendido al día, el plan se paga solo.",
+      subtitle: "Con un plato extra vendido al dia, el plan se paga solo.",
       priceLabel: "49 €",
       priceSuffix: "/mes",
       features: [
-        "Menús ilimitados",
+        "Menus ilimitados",
         "IA para fotos y textos",
-        "Analíticas en tiempo real",
+        "Analiticas en tiempo real",
         "Banners y eventos",
-        "Multi-idioma automático",
+        "Multi idioma automatico",
         "Filtros y PDF imprimible",
         "1 mes gratis",
       ],
-      cta: "Empieza gratis",
+      cta: "Empezar gratis",
       compareTitle: "TavoloAI vs alternativas",
       comparePoints: [
-        "Más ventas vs papel o PDF estático",
-        "Edición en segundos vs diseñadores externos",
-        "Eventos y banners listos para WhatsApp/Instagram",
-        "Estadísticas y control en tiempo real",
+        "Mas ventas frente a carta en papel o PDF estatico",
+        "Cambios en segundos vs disenadores externos",
+        "Banners listos para WhatsApp e Instagram",
+        "Estadisticas y control en tiempo real",
       ],
     },
     demo: {
-      title: "Vívelo como cliente",
-      description: "Escanea el QR o usa la simulación para probar las acciones clave.",
+      title: "Vive la experiencia como cliente",
+      description: "Escanea el QR o usa la simulacion para probar las acciones clave.",
       tasks: [
         { id: "lang", label: "Cambiar idioma" },
         { id: "gluten", label: "Activar filtro sin gluten" },
-        { id: "dish", label: "Destacar plato del día" },
+        { id: "dish", label: "Destacar plato del dia" },
         { id: "share", label: "Compartir evento en WhatsApp" },
       ],
       glutenButton: "Sin gluten",
-      dishHighlight: "🔥 Plato del día: Ravioli al Limone",
-      shareButton: "📣 Compartir evento en WhatsApp",
-      simulationBadge: "Simulación interactiva",
+      dishHighlight: "Plato del dia: Ravioli al limon",
+      shareButton: "Compartir evento en WhatsApp",
+      simulationBadge: "Simulacion interactiva",
       qrAlt: "QR para demo interactiva",
       progressLabel: "{{value}}% completado",
     },
     faq: {
-      title: "Respuestas rápidas",
+      title: "Respuestas rapidas",
       items: [
-        { question: "¿Necesito app?", answer: "No, funciona como web-app QR sin descargas." },
-        { question: "¿Funciona sin internet?", answer: "Sí, incluye versión PDF imprimible." },
-        { question: "¿Puedo cancelar?", answer: "Sí, en un clic desde tu panel." },
-        { question: "¿Cumple GDPR?", answer: "Sí, los datos están protegidos y alojados en la UE." },
-        { question: "¿Necesito fotógrafo?", answer: "No, la IA genera imágenes por ti." },
-        { question: "¿Puedo personalizar diseño?", answer: "Sí, puedes cambiar colores, logo y tipografía." },
+        { question: "¿Necesito app?", answer: "No, funciona como web app QR sin descargas." },
+        { question: "¿Funciona sin internet?", answer: "Si, incluye version PDF imprimible." },
+        { question: "¿Puedo cancelar cuando quiera?", answer: "Si, con un clic desde tu panel." },
       ],
     },
     finalCta: {
       title: "Empieza gratis hoy",
-      description: "30 días gratis. Sube tu menú en 2 minutos y pruébalo sin tarjeta.",
+      description: "30 dias gratis. Sube tu menu en 2 minutos y pruebalo sin tarjeta.",
       cta: "Probar gratis",
-      badge: "Promoción disponible solo este mes",
+      badge: "Promocion disponible solo este mes",
     },
     sectionActions: {
-      infoLabel: "Más info",
+      infoLabel: "Mas info",
       hideLabel: "Ocultar info",
       primaryCta: "Prueba gratis",
     },
@@ -320,7 +322,7 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       description: "Edit in seconds, enhance photos, and share promotions with AI.",
       primaryCta: "Start for free",
       secondaryCta: "See how it works",
-      trial: "7-day free trial · no card · cancel anytime.",
+      trial: "7-day free trial, no card, cancel anytime.",
       liveBadge: "Live demo",
     },
     features: {
@@ -329,12 +331,14 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         {
           title: "AI-powered photos",
           badge: "More sales",
-          description: "Upload photos from your phone and make them look professional with AI in one click.",
+          description:
+            "Upload photos from your phone and make them look professional with AI in one click.",
         },
         {
           title: "Instant editing",
           badge: "Save time",
-          description: "Update the daily menu in seconds: change prices, order, and images effortlessly.",
+          description:
+            "Update the daily menu in seconds: change prices, order and photos effortlessly.",
         },
         {
           title: "Social promotion",
@@ -349,12 +353,12 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         {
           title: "Smart filters",
           badge: "Better experience",
-          description: "Highlight gluten-free, vegan, and more with intelligent auto filters.",
+          description: "Highlight gluten-free, vegan and more with intelligent auto filters.",
         },
         {
           title: "Automatic multi-language",
           badge: "Frictionless",
-          description: "Translate your menu instantly into Spanish, English, or Italian.",
+          description: "Translate your menu instantly into Spanish, English or Italian.",
         },
       ],
       prevLabel: "Previous",
@@ -374,9 +378,19 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         },
         {
           title: "Share and track",
-          description: "Table QR, ready-to-use banners, and live analytics.",
+          description:
+            "Table QR, ready-to-use banners and live analytics so you know what works.",
         },
       ],
+      sideNoteTitle: "Your menu ready in minutes",
+      sideNote:
+        "Turn your dishes into an appetizing digital menu in minutes, no designers or complexity.",
+      sideNote2Title: "Make every dish irresistible",
+      sideNote2:
+        "AI polishes photos and descriptions so every dish looks professional and mouth-watering.",
+      sideNote3Title: "Launch, learn and sell more",
+      sideNote3:
+        "Share your menu in one click, put QR on tables and see in real time what performs best.",
     },
     beforeAfter: {
       title: "AI power for your menu",
@@ -386,32 +400,12 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     },
     cases: {
       title: "Restaurants already selling more",
-      carouselRole: "success stories carousel",
+      carouselRole: "Success stories carousel",
       cards: [
         {
           name: "Trattoria Roma",
           result: "+18% featured dish sales (2 weeks)",
           quote: "We highlight the dish of the day and it flies.",
-        },
-        {
-          name: "Bar Costa",
-          result: "+40% weekend event interactions",
-          quote: "The WhatsApp banners saved our Fridays.",
-        },
-        {
-          name: "La Esquina",
-          result: "+22% table orders (1 month)",
-          quote: "The updated menu boosted our reservations.",
-        },
-        {
-          name: "Bistro Luna",
-          result: "+12% dessert upsell",
-          quote: "Guests are ordering more desserts now.",
-        },
-        {
-          name: "Cafe Verde",
-          result: "+9% weekly repeat visits",
-          quote: "Customers come back for the refreshed menu.",
         },
       ],
     },
@@ -429,52 +423,48 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         "Filters and printable PDF",
         "1 month free",
       ],
-      cta: "Start for free",
+      cta: "Start free",
       compareTitle: "TavoloAI vs alternatives",
       comparePoints: [
         "More sales vs paper or static PDF",
-        "Editing in seconds vs external designers",
-        "Ready-made banners for WhatsApp/Instagram",
-        "Analytics and control in real time",
+        "Edits in seconds vs external designers",
+        "Banners ready for WhatsApp/Instagram",
+        "Live stats and full control",
       ],
     },
     demo: {
-      title: "Experience it like a guest",
+      title: "Experience it as a guest",
       description: "Scan the QR or use the simulation to try the key actions.",
       tasks: [
-        { id: "lang", label: "Switch language" },
-        { id: "gluten", label: "Enable gluten-free filter" },
+        { id: "lang", label: "Change language" },
+        { id: "gluten", label: "Toggle gluten-free filter" },
         { id: "dish", label: "Highlight dish of the day" },
         { id: "share", label: "Share event on WhatsApp" },
       ],
-      glutenButton: "Gluten free",
-      dishHighlight: "🔥 Dish of the day: Lemon Ravioli",
-      shareButton: "📣 Share event on WhatsApp",
+      glutenButton: "Gluten-free",
+      dishHighlight: "Dish of the day: Lemon ravioli",
+      shareButton: "Share event on WhatsApp",
       simulationBadge: "Interactive simulation",
-      qrAlt: "QR for interactive demo",
-      progressLabel: "{{value}}% completed",
+      qrAlt: "QR code for interactive demo",
+      progressLabel: "{{value}}% complete",
     },
     faq: {
       title: "Quick answers",
       items: [
-        { question: "Do I need an app?", answer: "No, it works as a QR web app with no downloads." },
-        { question: "Does it work offline?", answer: "Yes, it includes a printable PDF version." },
-        { question: "Can I cancel?", answer: "Yes, with one click from your dashboard." },
-        { question: "Is it GDPR compliant?", answer: "Yes, data is protected and hosted in the EU." },
-        { question: "Do I need a photographer?", answer: "No, AI creates images for you." },
-        { question: "Can I customize the design?", answer: "Yes, change colors, logo, and typography." },
+        { question: "Do I need an app?", answer: "No, it works as a QR web app, no downloads." },
+        { question: "Does it work offline?", answer: "Yes, with a printable PDF version." },
       ],
     },
     finalCta: {
-      title: "Start for free today",
-      description: "30-day free trial. Upload your menu in 2 minutes and try it without a card.",
-      cta: "Try for free",
-      badge: "Promotion available this month only",
+      title: "Start free today",
+      description: "30 days free. Upload your menu in 2 minutes, no card required.",
+      cta: "Start free",
+      badge: "Promotion available only this month",
     },
     sectionActions: {
       infoLabel: "More info",
       hideLabel: "Hide info",
-      primaryCta: "Start free",
+      primaryCta: "Try free",
     },
   },
   it: {
@@ -486,9 +476,9 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         features: "Funzioni",
         demo: "Demo",
         howItWorks: "Passi",
-        pricing: "Prezzi",
+        pricing: "Piano",
         cases: "Casi",
-        faq: "FAQ",
+        faq: "Aiuto",
       },
       languages: {
         es: "Spagnolo",
@@ -500,46 +490,22 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       label: "Prova gratis",
     },
     hero: {
-      tagline: "Demo dal vivo",
-      title: "Il tuo menù, più intelligente che mai.",
+      tagline: "Demo live",
+      title: "Il tuo menu piu intelligente che mai.",
       description: "Modifica in pochi secondi, migliora le foto e condividi promozioni con l'IA.",
       primaryCta: "Inizia gratis",
       secondaryCta: "Guarda come funziona",
-      trial: "7 giorni gratis · senza carta · annulla quando vuoi.",
-      liveBadge: "Demo dal vivo",
+      trial: "7 giorni gratis, nessuna carta, annulla quando vuoi.",
+      liveBadge: "Demo live",
     },
     features: {
-      title: "Quello che solo TavoloAI può fare",
+      title: "Cosa puo fare solo TavoloAI",
       items: [
         {
           title: "Foto con IA",
-          badge: "Più vendite",
-          description: "Carica foto dal tuo telefono e falle sembrare professionali con un clic grazie all'IA.",
-        },
-        {
-          title: "Modifica istantanea",
-          badge: "Risparmia tempo",
-          description: "Aggiorna il menù del giorno in pochi secondi: prezzi, ordine e immagini.",
-        },
-        {
-          title: "Promozione sui social",
-          badge: "Pronto in 5 s",
-          description: "Crea pubblicità per il tuo locale e condividila sui social con un tocco di IA.",
-        },
-        {
-          title: "Nascondi piatti subito",
-          badge: "Zero errori",
-          description: "Aggiorna la disponibilità dei piatti in tempo reale, senza complicazioni.",
-        },
-        {
-          title: "Filtri intelligenti",
-          badge: "Migliore esperienza",
-          description: "Opzioni senza glutine, vegane e altro con filtri automatici intelligenti.",
-        },
-        {
-          title: "Multilingua automatico",
-          badge: "Senza attriti",
-          description: "Traduce il tuo menù all'istante in spagnolo, inglese o italiano.",
+          badge: "Piu vendite",
+          description:
+            "Carica le foto dal telefono e rendile piu professionali con l'Intelligenza Artificiale.",
         },
       ],
       prevLabel: "Precedente",
@@ -550,7 +516,7 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       title: "Dalle foto alle vendite in 3 passaggi",
       steps: [
         {
-          title: "Crea il tuo menù",
+          title: "Crea il tuo menu",
           description: "Carica foto e prezzi.",
         },
         {
@@ -562,41 +528,30 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
           description: "QR sul tavolo, banner pronti e statistiche in tempo reale.",
         },
       ],
+      sideNoteTitle: "Il tuo menu pronto in pochi minuti",
+      sideNote:
+        "Trasforma i tuoi piatti in un menu digitale invitante in pochi minuti, senza designer.",
+      sideNote2Title: "Rendi irresistibile ogni piatto",
+      sideNote2:
+        "L'IA rifinisce foto e descrizioni cosi ogni piatto sembra professionale e invitante.",
+      sideNote3Title: "Lancia, osserva e vendi di piu",
+      sideNote3:
+        "Condividi il menu con un clic, metti i QR sui tavoli e analizza in tempo reale cosa funziona meglio.",
     },
     beforeAfter: {
-      title: "La potenza dell'IA nel tuo menù",
+      title: "La potenza dell'IA nel tuo menu",
       beforeLabel: "Prima",
       afterLabel: "Dopo · +23% clic",
       sliderAria: "Confronta prima e dopo",
     },
     cases: {
-      title: "Ristoranti che vendono già di più",
-      carouselRole: "carosello di casi di successo",
+      title: "Ristoranti che vendono gia di piu",
+      carouselRole: "Carosello di casi di successo",
       cards: [
         {
           name: "Trattoria Roma",
           result: "+18% vendite del piatto di punta (2 settimane)",
-          quote: "Ora mettiamo in risalto il piatto del giorno e va a ruba.",
-        },
-        {
-          name: "Bar Costa",
-          result: "+40% interazioni agli eventi del weekend",
-          quote: "I banner per WhatsApp ci hanno salvato il venerdì.",
-        },
-        {
-          name: "La Esquina",
-          result: "+22% ordini al tavolo (1 mese)",
-          quote: "Il menù aggiornato ha fatto crescere le prenotazioni.",
-        },
-        {
-          name: "Bistro Luna",
-          result: "+12% di upsell sui dessert",
-          quote: "I clienti ora ordinano più dessert.",
-        },
-        {
-          name: "Cafe Verde",
-          result: "+9% di visite settimanali ripetute",
-          quote: "I clienti tornano per il nuovo menù.",
+          quote: "Il piatto del giorno va a ruba.",
         },
       ],
     },
@@ -606,7 +561,7 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       priceLabel: "49 €",
       priceSuffix: "/mese",
       features: [
-        "Menù illimitati",
+        "Menu illimitati",
         "IA per foto e testi",
         "Analitiche in tempo reale",
         "Banner ed eventi",
@@ -617,7 +572,7 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       cta: "Inizia gratis",
       compareTitle: "TavoloAI vs alternative",
       comparePoints: [
-        "Più vendite rispetto a carta o PDF statico",
+        "Piu vendite rispetto a carta o PDF statico",
         "Modifiche in pochi secondi vs grafici esterni",
         "Banner pronti per WhatsApp/Instagram",
         "Statistiche e controllo in tempo reale",
@@ -629,12 +584,10 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       tasks: [
         { id: "lang", label: "Cambiare lingua" },
         { id: "gluten", label: "Attivare filtro senza glutine" },
-        { id: "dish", label: "Evidenziare piatto del giorno" },
-        { id: "share", label: "Condividere evento su WhatsApp" },
       ],
       glutenButton: "Senza glutine",
-      dishHighlight: "🔥 Piatto del giorno: Ravioli al Limone",
-      shareButton: "📣 Condividi evento su WhatsApp",
+      dishHighlight: "Piatto del giorno: Ravioli al limone",
+      shareButton: "Condividi evento su WhatsApp",
       simulationBadge: "Simulazione interattiva",
       qrAlt: "QR per demo interattiva",
       progressLabel: "{{value}}% completato",
@@ -642,22 +595,17 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     faq: {
       title: "Risposte rapide",
       items: [
-        { question: "Serve un'app?", answer: "No, funziona come web-app QR senza download." },
-        { question: "Funziona senza internet?", answer: "Sì, include una versione PDF stampabile." },
-        { question: "Posso annullare?", answer: "Sì, con un clic dal tuo pannello." },
-        { question: "È conforme al GDPR?", answer: "Sì, i dati sono protetti e ospitati nell'UE." },
-        { question: "Serve un fotografo?", answer: "No, l'IA genera le immagini per te." },
-        { question: "Posso personalizzare il design?", answer: "Sì, puoi modificare colori, logo e tipografia." },
+        { question: "Serve un'app?", answer: "No, funziona come web app QR senza download." },
       ],
     },
     finalCta: {
       title: "Inizia gratis oggi",
-      description: "30 giorni gratis. Carica il tuo menù in 2 minuti e provalo senza carta.",
+      description: "30 giorni gratis. Carica il tuo menu in 2 minuti e provalo senza carta.",
       cta: "Prova gratis",
       badge: "Promozione disponibile solo questo mese",
     },
     sectionActions: {
-      infoLabel: "Più info",
+      infoLabel: "Piu info",
       hideLabel: "Nascondi info",
       primaryCta: "Prova gratis",
     },
@@ -740,7 +688,8 @@ export function useTranslation() {
 }
 
 export const SUPPORTED_LANGUAGES: Array<{ code: LanguageCode; label: string }> = [
-  { code: "es", label: "Español" },
+  { code: "es", label: "Espanol" },
   { code: "en", label: "English" },
   { code: "it", label: "Italiano" },
 ]
+
