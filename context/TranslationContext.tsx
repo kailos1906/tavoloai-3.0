@@ -76,12 +76,20 @@ type TranslationDictionary = {
   pricing: {
     title: string
     subtitle: string
+    billingMonthlyLabel: string
+    billingYearlyLabel: string
     priceLabel: string
     priceSuffix: string
     features: string[]
     cta: string
     compareTitle: string
     comparePoints: string[]
+    freePlan?: {
+      title: string
+      subtitle: string
+      features: string[]
+      cta: string
+    }
   }
   demo: {
     title: string
@@ -238,6 +246,8 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     pricing: {
       title: "Un solo plan, todo incluido.",
       subtitle: "Con un plato extra vendido al dia, el plan se paga solo.",
+      billingMonthlyLabel: "Plan mensual",
+      billingYearlyLabel: "Plan anual",
       priceLabel: "49 €",
       priceSuffix: "/mes",
       features: [
@@ -251,13 +261,26 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       ],
       cta: "Empezar gratis",
       compareTitle: "TavoloAI vs alternativas",
-      comparePoints: [
-        "Mas ventas frente a carta en papel o PDF estatico",
-        "Cambios en segundos vs disenadores externos",
-        "Banners listos para WhatsApp e Instagram",
-        "Estadisticas y control en tiempo real",
-      ],
-    },
+        comparePoints: [
+          "Mas ventas frente a carta en papel o PDF estatico",
+          "Cambios en segundos vs disenadores externos",
+          "Banners listos para WhatsApp e Instagram",
+          "Estadisticas y control en tiempo real",
+        ],
+        freePlan: {
+          title: "FREE - Empieza gratis",
+          subtitle: "Digitaliza tu menu en minutos y prueba TavoloAI sin riesgo.",
+          features: [
+            "1 menu predisenado listo para usar",
+            "Hasta 20 platos con fotos",
+            "QR dinamico siempre actualizado",
+            "Editar y ocultar/mostrar platos al instante",
+            "Busqueda basica e IA ligera para textos",
+            "Branding TavoloAI visible",
+          ],
+          cta: "Empezar gratis",
+        },
+      },
     demo: {
       title: "Vive la experiencia como cliente",
       description: "Escanea el QR o usa la simulacion para probar las acciones clave.",
@@ -280,6 +303,9 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
         { question: "¿Necesito app?", answer: "No, funciona como web app QR sin descargas." },
         { question: "¿Funciona sin internet?", answer: "Si, incluye version PDF imprimible." },
         { question: "¿Puedo cancelar cuando quiera?", answer: "Si, con un clic desde tu panel." },
+        { question: "¿Cumple GDPR?", answer: "Sí, los datos están protegidos y alojados en la UE." },
+        { question: "¿Necesito fotógrafo?", answer: "No, la IA genera imágenes por ti." },
+        { question: "¿Puedo personalizar diseño?", answer: "Sí, puedes cambiar colores, logo y tipografía." },
       ],
     },
     finalCta: {
@@ -412,6 +438,8 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     pricing: {
       title: "One plan, everything included.",
       subtitle: "Sell just one extra dish per day and the plan pays for itself.",
+      billingMonthlyLabel: "Monthly plan",
+      billingYearlyLabel: "Annual plan",
       priceLabel: "49 €",
       priceSuffix: "/month",
       features: [
@@ -425,13 +453,26 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       ],
       cta: "Start free",
       compareTitle: "TavoloAI vs alternatives",
-      comparePoints: [
-        "More sales vs paper or static PDF",
-        "Edits in seconds vs external designers",
-        "Banners ready for WhatsApp/Instagram",
-        "Live stats and full control",
-      ],
-    },
+        comparePoints: [
+          "More sales vs paper or static PDF",
+          "Edits in seconds vs external designers",
+          "Banners ready for WhatsApp/Instagram",
+          "Live stats and full control",
+        ],
+        freePlan: {
+          title: "FREE - Start free",
+          subtitle: "Digitize your menu in minutes and try TavoloAI with no risk.",
+          features: [
+            "1 predesigned menu ready to use",
+            "Up to 20 dishes with photos",
+            "Dynamic QR always up to date",
+            "Edit and hide/show dishes instantly",
+            "Basic search and light AI for copy",
+            "Visible TavoloAI branding",
+          ],
+          cta: "Start free",
+        },
+      },
     demo: {
       title: "Experience it as a guest",
       description: "Scan the QR or use the simulation to try the key actions.",
@@ -558,6 +599,8 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
     pricing: {
       title: "Un solo piano, tutto incluso.",
       subtitle: "Basta un piatto extra venduto al giorno e il piano si ripaga.",
+      billingMonthlyLabel: "Piano mensile",
+      billingYearlyLabel: "Piano annuale",
       priceLabel: "49 €",
       priceSuffix: "/mese",
       features: [
@@ -571,13 +614,26 @@ const dictionaries: Record<LanguageCode, TranslationDictionary> = {
       ],
       cta: "Inizia gratis",
       compareTitle: "TavoloAI vs alternative",
-      comparePoints: [
-        "Piu vendite rispetto a carta o PDF statico",
-        "Modifiche in pochi secondi vs grafici esterni",
-        "Banner pronti per WhatsApp/Instagram",
-        "Statistiche e controllo in tempo reale",
-      ],
-    },
+        comparePoints: [
+          "Piu vendite rispetto a carta o PDF statico",
+          "Modifiche in pochi secondi vs grafici esterni",
+          "Banner pronti per WhatsApp/Instagram",
+          "Statistiche e controllo in tempo reale",
+        ],
+        freePlan: {
+          title: "FREE - Inizia gratis",
+          subtitle: "Digitalizza il tuo menu in pochi minuti e prova TavoloAI senza rischi.",
+          features: [
+            "1 menu predefinito pronto all'uso",
+            "Fino a 20 piatti con foto",
+            "QR dinamico sempre aggiornato",
+            "Modifica e nascondi/mostra piatti all'istante",
+            "Ricerca base e IA leggera per i testi",
+            "Branding TavoloAI visibile",
+          ],
+          cta: "Inizia gratis",
+        },
+      },
     demo: {
       title: "Vivilo come cliente",
       description: "Scansiona il QR o usa la simulazione per provare le azioni principali.",
@@ -692,4 +748,3 @@ export const SUPPORTED_LANGUAGES: Array<{ code: LanguageCode; label: string }> =
   { code: "en", label: "English" },
   { code: "it", label: "Italiano" },
 ]
-

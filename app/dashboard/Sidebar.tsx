@@ -2,10 +2,11 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Home, Menu, Users, Settings, BarChart3, LogOut, ChefHat } from "lucide-react"
 import { useState } from "react"
+import { supabase } from "@/lib/supabaseClient"
 
 const menuItems = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
@@ -20,6 +21,7 @@ const MotionLink = motion(Link)
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   const isActive = (href: string) => {
     if (href === "/dashboard") return pathname === "/dashboard"
@@ -33,18 +35,18 @@ export default function Sidebar() {
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
       className={`${
         isCollapsed ? "w-20" : "w-64"
-      } bg-white/40 backdrop-blur-md border-r border-slate-200/50 flex flex-col transition-all duration-300 shadow-lg`}
+      } bg-black/70 backdrop-blur-2xl border-r border-white/10 flex flex-col transition-all duration-300 text-slate-100 shadow-[8px_0_40px_rgba(0,0,0,0.65)]`}
     >
       {/* Header */}
-      <div className="p-6 border-b border-slate-200/30">
+      <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/20">
-            <ChefHat className="w-5 h-5 text-slate-600" />
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-600/40 to-purple-500/40 rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+            <ChefHat className="w-5 h-5 text-white" />
           </div>
           {!isCollapsed && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-              <h2 className="font-bold text-slate-800 text-lg">TavoloAI</h2>
-              <p className="text-xs text-slate-500 font-medium">Restaurante</p>
+              <h2 className="font-bold text-white text-lg">TavoloAI</h2>
+              <p className="text-xs text-slate-300 font-medium">Restaurante</p>
             </motion.div>
           )}
         </div>
@@ -63,8 +65,8 @@ export default function Sidebar() {
               transition={{ delay: index * 0.05 }}
               className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group ${
                 active
-                  ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-slate-800 shadow-sm border border-white/30"
-                  : "text-slate-600 hover:bg-white/50 hover:text-slate-800"
+                  ? "bg-gradient-to-r from-blue-600/30 to-purple-600/30 text-white shadow-lg border border-white/20"
+                  : "text-slate-300 hover:bg-white/10 hover:text-white"
               }`}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -78,11 +80,15 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-slate-200/30">
+      <div className="p-4 border-t border-white/10">
         <motion.button
+          onClick={async () => {
+            await supabase.auth.signOut()
+            router.push("/")
+          }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-slate-600 hover:bg-red-50/50 hover:text-red-600 transition-all duration-200"
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-slate-300 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200"
         >
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && <span className="font-medium text-sm">Cerrar Sesión</span>}
@@ -92,10 +98,10 @@ export default function Sidebar() {
       {/* Collapse Toggle */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+        className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/10 backdrop-blur border border-white/30 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
       >
         <motion.div animate={{ rotate: isCollapsed ? 180 : 0 }} transition={{ duration: 0.2 }}>
-          <Menu className="w-4 h-4 text-slate-600" />
+          <Menu className="w-4 h-4 text-white" />
         </motion.div>
       </button>
     </motion.aside>

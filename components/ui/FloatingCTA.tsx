@@ -58,6 +58,7 @@ function FloatingCTA({
   const [topPx, setTopPx] = useState<number | null>(null)
   const [renderTop, setRenderTop] = useState<number | null>(null)
   const [globallyBlocked, setGloballyBlocked] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
 
   const observerRef = useRef<IntersectionObserver | null>(null)
   const rafRef = useRef<number | null>(null)
@@ -224,6 +225,18 @@ function FloatingCTA({
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined
+    const handleOpen = () => setAuthModalOpen(true)
+    const handleClose = () => setAuthModalOpen(false)
+    window.addEventListener("auth:open", handleOpen)
+    window.addEventListener("auth:close", handleClose)
+    return () => {
+      window.removeEventListener("auth:open", handleOpen)
+      window.removeEventListener("auth:close", handleClose)
+    }
+  }, [])
+
   const handleClick = useCallback(
     (e?: React.MouseEvent) => {
       e?.stopPropagation()
@@ -294,7 +307,7 @@ function FloatingCTA({
   // Render: si no hay sección activa (o topPx aún no calculado) o está bloqueado globalmente, no mostramos.
   return (
     <AnimatePresence>
-      {visible && resolvedTop != null && !globallyBlocked && (
+      {visible && resolvedTop != null && !globallyBlocked && !authModalOpen && (
         <div
           className="fixed left-1/2 z-50 pointer-events-none"
           style={{

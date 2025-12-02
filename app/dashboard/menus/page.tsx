@@ -274,7 +274,7 @@ export default function MenusPage() {
   // UI
   // ----------------------
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-white via-blue-50/30 to-slate-50/40">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#03040a] via-[#050b16] to-[#010204]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(59,130,246,0.18),transparent_60%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_20%,rgba(168,85,247,0.16),transparent_60%)]" />
 
@@ -286,24 +286,24 @@ export default function MenusPage() {
       >
         <motion.section
           variants={cardVariants}
-          className="rounded-3xl border border-white/30 bg-white/70 px-6 py-10 text-center shadow-lg shadow-slate-900/5 backdrop-blur-md"
+          className="rounded-3xl border border-white/15 bg-white/5 px-6 py-10 text-center shadow-[0_35px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl"
         >
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Gestión de menús</h1>
-          <p className="mt-2 text-lg font-medium text-slate-600">
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Gestión de menús</h1>
+          <p className="mt-2 text-lg font-medium text-slate-300">
             Administra tus productos, organiza menús y comparte versiones públicas con un par de clics.
           </p>
         </motion.section>
 
         <motion.section variants={cardVariants} className="flex justify-center">
-          <div className="inline-flex rounded-full border border-white/30 bg-white/70 p-2 shadow-lg backdrop-blur-md">
+          <div className="inline-flex rounded-full border border-white/20 bg-white/5 p-2 shadow-lg backdrop-blur-2xl">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className={`px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                   activeTab === tab.key
-                    ? "bg-white text-slate-700 shadow-md"
-                    : "text-slate-500 hover:text-slate-700 hover:bg-white/60"
+                    ? "bg-white/20 text-white shadow-lg border border-white/20"
+                    : "text-slate-400 hover:text-white hover:bg-white/10"
                 } rounded-full`}
               >
                 {tab.label}
@@ -384,23 +384,23 @@ function ItemsSection({
       <motion.div variants={cardVariants} className="lg:col-span-1">
         <form
           onSubmit={onSubmit}
-          className="bg-white/40 backdrop-blur-xl border border-white/30 rounded-3xl shadow-xl p-8 space-y-8 will-change-transform"
+          className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.55)] p-8 space-y-8 will-change-transform text-white"
         >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-400/30 to-purple-400/30 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg border border-white/20">
-              <Plus className="w-6 h-6 text-slate-600" />
+              <Plus className="w-6 h-6 text-slate-300" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-slate-700">{editingId ? "Editar Producto" : "Nuevo Producto"}</h2>
-              <p className="text-slate-500 font-medium">{editingId ? "Modifica los detalles" : "Añade un nuevo elemento"}</p>
+              <h2 className="text-2xl font-bold text-white">{editingId ? "Editar Producto" : "Nuevo Producto"}</h2>
+              <p className="text-slate-400 font-medium">{editingId ? "Modifica los detalles" : "Añade un nuevo elemento"}</p>
             </div>
           </div>
 
           <div className="space-y-6">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Nombre del producto</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Nombre del producto</label>
               <input
-                className="w-full bg-white/60 backdrop-blur-sm border border-white/40 rounded-2xl px-5 py-4 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/40 rounded-2xl px-5 py-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
                 placeholder="Ej. Hamburguesa Clásica"
                 value={form.nombre}
                 onChange={(e: any) => setForm((f: any) => ({ ...f, nombre: e.target.value }))}
@@ -408,13 +408,13 @@ function ItemsSection({
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Precio</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Precio</label>
               <div className="relative">
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">$</span>
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">$</span>
                 <input
                   type="number"
                   step="0.01"
-                  className="w-full bg-white/60 backdrop-blur-sm border border-white/40 rounded-2xl pl-10 pr-5 py-4 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/40 rounded-2xl pl-10 pr-5 py-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
                   placeholder="0.00"
                   value={form.precio || ""}
                   onChange={(e: any) => setForm((f: any) => ({ ...f, precio: Number.parseFloat(e.target.value) || 0 }))}
@@ -423,9 +423,9 @@ function ItemsSection({
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Categoría</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Categoría</label>
               <select
-                className="w-full bg-white/60 backdrop-blur-sm border border-white/40 rounded-2xl px-5 py-4 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/40 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-300/50 focus:border-transparent transition-all shadow-sm"
                 value={form.categoria}
                 onChange={(e: any) => setForm((f: any) => ({ ...f, categoria: e.target.value }))}
               >
@@ -437,8 +437,8 @@ function ItemsSection({
 
             <div className="flex items-center justify-between p-5 bg-gradient-to-r from-white/50 to-white/30 backdrop-blur-sm rounded-3xl border border-white/30">
               <div>
-                <p className="text-base font-semibold text-slate-700">Producto activo</p>
-                <p className="text-sm text-slate-500">Visible para los clientes</p>
+                <p className="text-base font-semibold text-white">Producto activo</p>
+                <p className="text-sm text-slate-400">Visible para los clientes</p>
               </div>
               <button
                 type="button"
@@ -448,7 +448,7 @@ function ItemsSection({
                 }`}
               >
                 <div
-                  className={`absolute top-1 w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ${
+                  className={`absolute top-1 w-6 h-6 bg-white/10 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ${
                     form.activo ? "translate-x-7" : "translate-x-1"
                   }`}
                 />
@@ -471,7 +471,7 @@ function ItemsSection({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={reset}
-                className="px-6 py-4 bg-white/50 backdrop-blur-sm text-slate-600 rounded-2xl font-semibold transition-all shadow-md border border-white/30 hover:bg-white/70"
+                className="px-6 py-4 bg-white/10 backdrop-blur-sm text-slate-300 rounded-2xl font-semibold transition-all shadow-md border border-white/30 hover:bg-white/5"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -484,7 +484,7 @@ function ItemsSection({
       <motion.div variants={cardVariants} className="lg:col-span-2">
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-bold text-slate-700">Productos ({filteredItems.length})</h3>
+            <h3 className="text-2xl font-bold text-white">Productos ({filteredItems.length})</h3>
           </div>
 
           <motion.div className="grid gap-5" variants={containerVariants} initial="hidden" animate="visible">
@@ -497,21 +497,21 @@ function ItemsSection({
                   animate="visible"
                   exit="exit"
                   layout
-                  className="bg-white/40 backdrop-blur-xl border border-white/30 rounded-3xl shadow-xl p-6 will-change-transform"
+                  className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.55)] p-6 will-change-transform text-white"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-5 flex-1">
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-300/20 to-purple-300/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-md border border-white/20">
-                        <span className="text-slate-500">{getCategoryIcon(item.categoria)}</span>
+                        <span className="text-slate-400">{getCategoryIcon(item.categoria)}</span>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h4 className="font-bold text-slate-700 text-xl">{item.nombre}</h4>
+                          <h4 className="font-bold text-white text-xl">{item.nombre}</h4>
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-sm ${
                               item.activo
                                 ? "bg-green-200/40 text-green-600 border-green-300/40"
-                                : "bg-slate-200/40 text-slate-500 border-slate-300/40"
+                                : "bg-slate-200/20 text-slate-400 border-slate-300/40"
                             }`}
                           >
                             {item.activo ? "Activo" : "Inactivo"}
@@ -521,7 +521,7 @@ function ItemsSection({
                           <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                             ${item.precio.toFixed(2)}
                           </p>
-                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-slate-100/50 text-slate-600 border border-white/30 backdrop-blur-sm">
+                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-white/10 text-slate-300 border border-white/30 backdrop-blur-sm">
                             {item.categoria}
                           </span>
                         </div>
@@ -556,8 +556,8 @@ function ItemsSection({
               <div className="w-20 h-20 bg-gradient-to-br from-slate-200/40 to-slate-300/40 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border border-white/20">
                 <ChefHat className="w-10 h-10 text-slate-400" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-600 mb-3">No hay productos</h3>
-              <p className="text-slate-500 text-lg">
+              <h3 className="text-2xl font-bold text-slate-300 mb-3">No hay productos</h3>
+              <p className="text-slate-400 text-lg">
                 {selectedCategory === "Todos"
                   ? "Añade tu primer producto para comenzar"
                   : `No hay productos en la categoría "${selectedCategory}"`}
@@ -569,15 +569,15 @@ function ItemsSection({
 
       {/* Filtro por categoría (arriba) */}
       <motion.div variants={cardVariants} className="lg:col-span-3 flex justify-center order-first lg:order-none">
-        <div className="bg-white/30 backdrop-blur-xl rounded-full p-2 inline-flex shadow-lg border border-white/20">
+        <div className="bg-white/5 backdrop-blur-xl rounded-full p-2 inline-flex shadow-lg border border-white/20">
           {categories.map((category: string) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                 selectedCategory === category
-                  ? "bg-white/90 text-slate-700 shadow-md transform scale-105 backdrop-blur-sm"
-                  : "text-slate-500 hover:text-slate-700 hover:bg-white/40"
+                  ? "bg-white/10 text-white shadow-md transform scale-105 backdrop-blur-sm"
+                  : "text-slate-400 hover:text-white hover:bg-white/10"
               }`}
             >
               {category}
@@ -650,15 +650,15 @@ function MenusSection({
     square?: boolean
   }) => (
     <div className="space-y-2">
-      <div className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">{label}</div>
+      <div className="text-[11px] font-semibold text-slate-300 uppercase tracking-wide">{label}</div>
       <button
         type="button"
         onClick={onPick}
-        className={`w-full ${square ? "aspect-square" : "h-28"} rounded-2xl border border-white/40 bg-white/60 hover:bg-white/80 transition flex items-center justify-center text-slate-700`}
+        className={`w-full ${square ? "aspect-square" : "h-28"} rounded-2xl border border-white/40 bg-white/10 hover:bg-white/10 transition flex items-center justify-center text-white`}
       >
         {value ? "Cambiar imagen" : "Subir imagen"}
       </button>
-      {hint && <div className="text-[11px] text-slate-500">{hint}</div>}
+      {hint && <div className="text-[11px] text-slate-400">{hint}</div>}
       {value && (
         <img
           src={value}
@@ -676,15 +676,15 @@ function MenusSection({
       <motion.div variants={cardVariants} className="lg:col-span-7 xl:col-span-8">
         <form
           onSubmit={onSubmitMenu}
-          className="bg-white/50 backdrop-blur-xl border border-white/40 rounded-3xl shadow-xl p-8 md:p-10 space-y-8"
+          className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.55)] p-8 md:p-10 space-y-8 text-white"
         >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-emerald-400/25 to-cyan-400/25 backdrop-blur-sm flex items-center justify-center shadow-lg border border-white/30">
-              <Layers className="w-6 h-6 text-slate-700" />
+              <Layers className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-slate-800">{editingMenuId ? "Editar Menú" : "Crear Menú"}</h2>
-              <p className="text-slate-500 font-medium">Agrupa productos y genera una vista pública</p>
+              <h2 className="text-3xl font-bold text-white">{editingMenuId ? "Editar Menú" : "Crear Menú"}</h2>
+              <p className="text-slate-400 font-medium">Agrupa productos y genera una vista pública</p>
             </div>
           </div>
 
@@ -711,9 +711,9 @@ function MenusSection({
           {/* Campos en dos columnas */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Nombre del menú</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Nombre del menú</label>
               <input
-                className="w-full bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl px-5 py-4 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300/50 focus:border-transparent transition-all shadow-sm"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/50 rounded-2xl px-5 py-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300/50 focus:border-transparent transition-all shadow-sm"
                 placeholder="Ej. Carta Vegana"
                 value={menuForm.nombre}
                 onChange={(e: any) => setMenuForm((f: any) => ({ ...f, nombre: e.target.value }))}
@@ -721,9 +721,9 @@ function MenusSection({
             </div>
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Slug público</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Slug público</label>
               <input
-                className="w-full bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl px-5 py-4 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300/50 focus:border-transparent transition-all shadow-sm"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/50 rounded-2xl px-5 py-4 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-300/50 focus:border-transparent transition-all shadow-sm"
                 placeholder="carta-vegana"
                 value={menuForm.slug}
                 onChange={(e: any) => setMenuForm((f: any) => ({ ...f, slug: slugify(e.target.value) }))}
@@ -732,12 +732,12 @@ function MenusSection({
 
             {/* Selector de productos ocupa ancho completo debajo */}
             <div className="md:col-span-2 space-y-3">
-              <label className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Productos</label>
+              <label className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Productos</label>
               <div className="max-h-80 overflow-auto pr-2 grid sm:grid-cols-2 gap-3">
                 {selectableItems.map((it: Item) => (
                   <label
                     key={it.id}
-                    className="flex items-center justify-between p-3 rounded-2xl border border-white/40 bg-white/60 backdrop-blur-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl border border-white/40 bg-white/10 backdrop-blur-sm"
                   >
                     <div className="flex items-center gap-3">
                       <input
@@ -746,9 +746,9 @@ function MenusSection({
                         checked={menuForm.items.includes(it.id)}
                         onChange={() => toggleMenuItem(it.id)}
                       />
-                      <span className="text-slate-700 font-medium">{it.nombre}</span>
+                      <span className="text-white font-medium">{it.nombre}</span>
                     </div>
-                    <span className="text-slate-500 text-sm">${it.precio.toFixed(2)}</span>
+                    <span className="text-slate-400 text-sm">${it.precio.toFixed(2)}</span>
                   </label>
                 ))}
               </div>
@@ -757,8 +757,8 @@ function MenusSection({
 
           <div className="flex items-center justify-between p-5 bg-gradient-to-r from-white/60 to-white/40 backdrop-blur-sm rounded-3xl border border-white/40">
             <div>
-              <p className="text-base font-semibold text-slate-700">Menú activo</p>
-              <p className="text-sm text-slate-500">Visible en la vista pública</p>
+              <p className="text-base font-semibold text-white">Menú activo</p>
+              <p className="text-sm text-slate-400">Visible en la vista pública</p>
             </div>
             <button
               type="button"
@@ -768,7 +768,7 @@ function MenusSection({
               }`}
             >
               <div
-                className={`absolute top-1 w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ${
+                className={`absolute top-1 w-6 h-6 bg-white/10 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ${
                   menuForm.activo ? "translate-x-7" : "translate-x-1"
                 }`}
               />
@@ -790,7 +790,7 @@ function MenusSection({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={resetMenu}
-                className="px-6 py-4 bg-white/60 backdrop-blur-sm text-slate-700 rounded-2xl font-semibold transition-all shadow-md border border-white/40 hover:bg-white/80"
+                className="px-6 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-semibold transition-all shadow-md border border-white/40 hover:bg-white/10"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -803,7 +803,7 @@ function MenusSection({
       <motion.div variants={cardVariants} className="lg:col-span-5 xl:col-span-4">
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-bold text-slate-700">Menús ({menus.length})</h3>
+            <h3 className="text-2xl font-bold text-white">Menús ({menus.length})</h3>
           </div>
 
           <motion.div className="grid gap-5" variants={containerVariants} initial="hidden" animate="visible">
@@ -816,7 +816,7 @@ function MenusSection({
                   animate="visible"
                   exit="exit"
                   layout
-                  className="bg-white/50 backdrop-blur-xl border border-white/40 rounded-3xl shadow-xl p-6"
+                  className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.55)] p-6 text-white"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex items-center gap-4">
@@ -825,18 +825,18 @@ function MenusSection({
                       </div>
                       <div>
                         <div className="flex items-center gap-3">
-                          <h4 className="font-bold text-slate-700 text-xl">{m.nombre}</h4>
+                          <h4 className="font-bold text-white text-xl">{m.nombre}</h4>
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-sm ${
                               m.activo
                                 ? "bg-green-200/40 text-green-600 border-green-300/40"
-                                : "bg-slate-200/40 text-slate-500 border-slate-300/40"
+                                : "bg-slate-200/20 text-slate-400 border-slate-300/40"
                             }`}
                           >
                             {m.activo ? "Activo" : "Inactivo"}
                           </span>
                         </div>
-                        <div className="flex flex-wrap items-center gap-2 text-slate-500 text-sm">
+                        <div className="flex flex-wrap items-center gap-2 text-slate-400 text-sm">
                           <span className="inline-flex items-center gap-1">
                             <LinkIcon className="w-3 h-3" />/{m.slug}
                           </span>
@@ -880,12 +880,12 @@ function MenusSection({
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
-              className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-white/50 p-6 md:p-8"
+              className="w-full max-w-2xl bg-[#050910] rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.7)] border border-white/10 p-6 md:p-8 text-white"
             >
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-slate-700">Vista pública: {showPublicModal.menu.nombre}</h3>
-                  <p className="text-slate-500">Comparte este menú con tus clientes</p>
+                  <h3 className="text-2xl font-bold text-white">Vista pública: {showPublicModal.menu.nombre}</h3>
+                  <p className="text-slate-400">Comparte este menú con tus clientes</p>
                 </div>
                 <button
                   className="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
@@ -900,12 +900,12 @@ function MenusSection({
                 <div className="flex flex-col items-center justify-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
                   <QRCode value={publicUrlFor(showPublicModal.menu)} size={160} />
                   <div className="w-full">
-                    <div className="text-xs text-slate-500 mb-1">URL pública</div>
+                    <div className="text-xs text-slate-400 mb-1">URL pública</div>
                     <div className="flex items-center gap-2">
                       <input
                         readOnly
                         value={publicUrlFor(showPublicModal.menu)}
-                        className="flex-1 px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700"
+                        className="flex-1 px-3 py-2 rounded-xl border border-white/20 bg-white/5 text-white"
                       />
                       <button
                         onClick={() => copyToClipboard(publicUrlFor(showPublicModal.menu!))}
@@ -918,19 +918,19 @@ function MenusSection({
                 </div>
 
                 {/* Preview simple del menú público */}
-                <div className="p-4 rounded-2xl bg-white border border-slate-200 max-h-96 overflow-auto">
-                  <h4 className="font-bold text-slate-700 mb-3">{showPublicModal.menu.nombre}</h4>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/20 max-h-96 overflow-auto text-white">
+                  <h4 className="font-bold text-white mb-3">{showPublicModal.menu.nombre}</h4>
                   <ul className="space-y-2">
                     {selectableItems
                       .filter((it: Item) => showPublicModal.menu!.items.includes(it.id))
                       .map((it: Item) => (
-                        <li key={it.id} className="flex items-center justify-between text-slate-700">
+                        <li key={it.id} className="flex items-center justify-between text-white">
                           <span>{it.nombre}</span>
                           <span className="font-semibold">${it.precio.toFixed(2)}</span>
                         </li>
                       ))}
                     {showPublicModal.menu.items.length === 0 && (
-                      <li className="text-slate-500">Este menú aún no tiene productos.</li>
+                      <li className="text-slate-400">Este menú aún no tiene productos.</li>
                     )}
                   </ul>
                 </div>
@@ -953,10 +953,10 @@ function IconButton({ children, onClick, title, danger = false }: any) {
       whileTap={{ scale: 0.95 }}
       title={title}
       onClick={onClick}
-      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-md backdrop-blur-sm border ${
+      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-lg backdrop-blur-sm border ${
         danger
-          ? "bg-red-200/30 hover:bg-red-300/40 text-red-500 border-white/20"
-          : "bg-slate-200/30 hover:bg-slate-300/40 text-slate-600 border-white/20"
+          ? "bg-red-400/20 hover:bg-red-500/30 text-red-200 border-white/20"
+          : "bg-white/10 hover:bg-white/20 text-white border-white/20"
       }`}
     >
       {children}

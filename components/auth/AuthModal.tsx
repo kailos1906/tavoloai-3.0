@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence, useAnimation } from "framer-motion"
 import { useRouter } from "next/navigation"
 import Button from "@/components/ui/Button"
+import { supabase } from "@/lib/supabaseClient"
 
 type Props = {
   open: boolean
@@ -15,6 +16,12 @@ export default function AuthModal({ open, onClose }: Props) {
   const router = useRouter()
   const [hovered, setHovered] = useState(false)
   const controls = useAnimation()
+  const [mode, setMode] = useState<"signin" | "signup">("signin")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [infoMessage, setInfoMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -29,6 +36,49 @@ export default function AuthModal({ open, onClose }: Props) {
     requestAnimationFrame(() => router.push(href))
   }
 
+  const handleEmailAuth = async () => {
+    setLoading(true)
+    setErrorMessage(null)
+    setInfoMessage(null)
+    try {
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (error) throw error
+        setInfoMessage("Sesión iniciada.")
+        setTimeout(() => {
+          onClose()
+          router.push("/dashboard")
+        }, 400)
+      } else {
+        const { error } = await supabase.auth.signUp({ email, password })
+        if (error) throw error
+        setInfoMessage("Revisa tu correo para confirmar tu cuenta.")
+      }
+    } catch (err) {
+      const message = err?.message ?? "No se pudo procesar la solicitud."
+      setErrorMessage(message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleAuth = async () => {
+    setErrorMessage(null)
+    setInfoMessage("Redirigiendo a Google...")
+    try {
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+        },
+      })
+    } catch (err) {
+      const message = err?.message ?? "No se pudo iniciar sesión con Google."
+      setErrorMessage(message)
+      setInfoMessage(null)
+    }
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -36,7 +86,7 @@ export default function AuthModal({ open, onClose }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-slate-900/20 backdrop-blur-md flex items-center justify-center px-4"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xl flex items-center justify-center px-4"
           onClick={onClose}
           aria-modal="true"
           role="dialog"
@@ -51,14 +101,14 @@ export default function AuthModal({ open, onClose }: Props) {
               stiffness: 200,
               mass: 0.8,
             }}
-            className="relative w-full max-w-md rounded-3xl bg-white/60 backdrop-blur-xl border border-white/30 p-8 shadow-2xl shadow-slate-900/10 overflow-hidden"
+            className="relative w-full max-w-md rounded-[32px] bg-neutral-950/85 backdrop-blur-2xl border border-white/10 p-8 shadow-[0_40px_140px_rgba(0,0,0,0.85)] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/20 to-slate-50/30 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-blue-900/25 pointer-events-none" />
             <motion.button
               onClick={onClose}
               aria-label="Cerrar"
-              className="absolute right-4 top-4 w-8 h-8 rounded-full bg-slate-100/60 backdrop-blur-sm hover:bg-slate-200/60 flex items-center justify-center text-slate-600 hover:text-slate-800 transition-all duration-200"
+              className="absolute right-4 top-4 w-8 h-8 rounded-full border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10 transition-all duration-200 flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -70,7 +120,7 @@ export default function AuthModal({ open, onClose }: Props) {
             {/* Contenido */}
             <div className="relative z-10">
               <motion.h2
-                className="text-3xl font-bold mb-2 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent"
+                className="text-3xl font-semibold mb-2 text-white"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
@@ -79,7 +129,7 @@ export default function AuthModal({ open, onClose }: Props) {
               </motion.h2>
 
               <motion.p
-                className="text-slate-600 mb-8 leading-relaxed"
+                className="text-slate-400 mb-8 leading-relaxed"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 }}
@@ -95,59 +145,68 @@ export default function AuthModal({ open, onClose }: Props) {
                 transition={{ delay: 0.2 }}
                 onSubmit={(e) => {
                   e.preventDefault()
-                  onClose()
+                  void handleEmailAuth()
                 }}
               >
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700 mb-2 block">Correo electrónico</span>
+                  <span className="text-sm font-medium text-slate-300 mb-2 block">Correo electrónico</span>
                   <input
                     type="email"
                     required
                     placeholder="tu@correo.com"
-                    className="w-full rounded-2xl border border-slate-200/40 bg-white/60 backdrop-blur-sm px-4 py-3 text-slate-900 placeholder-slate-500 outline-none focus:border-blue-400/60 focus:bg-white/80 focus:ring-4 focus:ring-blue-400/10 focus:shadow-lg focus:shadow-blue-400/5 transition-all"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-500 outline-none focus:border-blue-400/60 focus:bg-white/10 focus:ring-4 focus:ring-blue-400/10 transition-all"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700 mb-2 block">Contraseña</span>
+                  <span className="text-sm font-medium text-slate-300 mb-2 block">Contraseña</span>
                   <input
                     type="password"
                     required
                     placeholder="••••••••"
-                    className="w-full rounded-2xl border border-slate-200/40 bg-white/60 backdrop-blur-sm px-4 py-3 text-slate-900 placeholder-slate-500 outline-none focus:border-blue-400/60 focus:bg-white/80 focus:ring-4 focus:ring-blue-400/10 focus:shadow-lg focus:shadow-blue-400/5 transition-all"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-500 outline-none focus:border-blue-400/60 focus:bg-white/10 focus:ring-4 focus:ring-blue-400/10 transition-all"
                   />
                 </label>
 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button type="submit" className="w-full py-3 text-base font-semibold">
-                    Entrar
+                {errorMessage && <p className="text-sm text-rose-400">{errorMessage}</p>}
+                {infoMessage && <p className="text-sm text-emerald-300">{infoMessage}</p>}
+
+                <motion.div whileHover={{ scale: loading ? 1 : 1.02 }} whileTap={{ scale: loading ? 1 : 0.98 }}>
+                  <Button type="submit" className="w-full py-3 text-base font-semibold" disabled={loading}>
+                    {loading ? "Procesando..." : mode === "signin" ? "Entrar" : "Crear cuenta"}
                   </Button>
                 </motion.div>
               </motion.form>
 
               {/* Enlaces */}
-              <div className="mt-4 flex items-center justify-between text-sm">
+              <div className="mt-4 flex items-center justify-between text-sm text-slate-400">
                 <button
+                  type="button"
                   onClick={() => navigateAndClose("/forgot-password")}
-                  className="text-slate-600 hover:text-slate-800 underline decoration-dotted transition-colors bg-transparent"
+                  className="text-slate-300 hover:text-white underline decoration-dotted transition-colors bg-transparent"
                 >
                   ¿Olvidaste tu contraseña?
                 </button>
-                <div className="text-slate-500">
-                  ¿No tienes cuenta?
+                <div className="text-slate-400">
+                  {mode === "signin" ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?"}
                   <button
-                    onClick={() => navigateAndClose("/register")}
-                    className="text-blue-600 hover:text-blue-700 font-medium underline ml-1 bg-transparent"
+                    type="button"
+                    onClick={() => setMode((prev) => (prev === "signin" ? "signup" : "signin"))}
+                    className="text-blue-300 hover:text-blue-200 font-medium underline ml-1 bg-transparent"
                   >
-                    Regístrate
+                    {mode === "signin" ? "Regístrate" : "Inicia sesión"}
                   </button>
                 </div>
               </div>
 
               <div className="my-8 flex items-center gap-4">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
-                <span className="text-sm text-slate-500 font-medium">o</span>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                <span className="text-sm text-slate-400 font-medium">o</span>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
               </div>
 
               {/* Botón Google con brillo real */}
@@ -155,8 +214,8 @@ export default function AuthModal({ open, onClose }: Props) {
                 <motion.button
                   onMouseEnter={() => setHovered(true)}
                   onMouseLeave={() => setHovered(false)}
-                  onClick={() => alert("Google Sign-In (placeholder)")}
-                  className="relative w-12 h-12 rounded-full bg-white/70 backdrop-blur-md border border-slate-200/50 shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] transition-all duration-300 flex items-center justify-center overflow-hidden"
+                  onClick={() => void handleGoogleAuth()}
+                  className="relative w-12 h-12 rounded-full bg-white/10 border border-white/20 shadow-[0_18px_40px_rgba(0,0,0,0.65)] hover:bg-white/20 transition-all duration-300 flex items-center justify-center overflow-hidden"
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                 >

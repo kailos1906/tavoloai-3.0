@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import dynamic from "next/dynamic"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useTranslation } from "@/context/TranslationContext"
+import { openAuthModal, closeAuthModal } from "@/lib/authModal"
 
 const AuthModal = dynamic(() => import("@/components/auth/AuthModal"), { ssr: false })
 
@@ -22,8 +23,13 @@ export default function Header() {
 
   useEffect(() => {
     const onOpen = () => setOpen(true)
+    const onClose = () => setOpen(false)
     window.addEventListener("auth:open", onOpen)
-    return () => window.removeEventListener("auth:open", onOpen)
+    window.addEventListener("auth:close", onClose)
+    return () => {
+      window.removeEventListener("auth:open", onOpen)
+      window.removeEventListener("auth:close", onClose)
+    }
   }, [])
 
   useEffect(() => {
@@ -61,6 +67,11 @@ export default function Header() {
       const params = searchString ? `?${searchString}` : ""
       router.push(`/${params}${hash}`)
     }
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    closeAuthModal()
   }
 
   return (
@@ -110,7 +121,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <motion.button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={openAuthModal}
               aria-label={t("header.login")}
               className="text-[12px] font-semibold text-slate-300 transition-colors hover:text-white"
               whileHover={{ scale: 1.01 }}
@@ -135,7 +146,7 @@ export default function Header() {
         </div>
       </motion.header>
 
-      <AuthModal open={open} onClose={() => setOpen(false)} />
+      <AuthModal open={open} onClose={handleClose} />
     </>
   )
 }

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Button from "@/components/ui/Button"
 import { Upload, Globe, BookOpen } from "lucide-react"
+import { supabase } from "@/lib/supabaseClient"
 
 const GRADIENT =
     "linear-gradient(90deg,#491f53 0%,#7e00bf 25%,#312783 50%,#006ae9 75%,#6adbff 90%,#3ea3dc 100%)"
@@ -23,6 +24,7 @@ export default function RegisterPage() {
     })
     const [loading, setLoading] = useState(false)
     const [created, setCreated] = useState(false)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -31,9 +33,37 @@ export default function RegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        await new Promise((r) => setTimeout(r, 900))
-        setLoading(false)
-        setCreated(true)
+        setErrorMessage(null)
+        try {
+            const response = await fetch("/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: form.email,
+                    password: form.password,
+                    name: form.name,
+                    business: form.business,
+                }),
+            })
+
+            const payload = await response.json()
+            if (!response.ok) {
+                throw new Error(payload.error || "No se pudo crear la cuenta. Intenta de nuevo.")
+            }
+
+            const { error: signInError } = await supabase.auth.signInWithPassword({
+                email: form.email,
+                password: form.password,
+            })
+            if (signInError) throw signInError
+
+            setCreated(true)
+        } catch (error) {
+            const message = error?.message ?? "No se pudo crear la cuenta. Intenta de nuevo."
+            setErrorMessage(message)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -143,6 +173,8 @@ export default function RegisterPage() {
                                         Volver
                                     </motion.button>
                                 </div>
+
+                                {errorMessage && <p className="text-sm text-rose-500">{errorMessage}</p>}
 
                                 <div className="text-sm text-slate-500 mt-1">
                                     ¿Ya tienes una cuenta?{" "}
