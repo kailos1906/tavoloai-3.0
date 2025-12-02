@@ -3,6 +3,16 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin"
 
 export async function POST(request: Request) {
   try {
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        {
+          error:
+            "Servicio de Supabase no configurado. Define NEXT_PUBLIC_SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY en tu entorno.",
+        },
+        { status: 500 },
+      )
+    }
+
     const body = await request.json()
     const { email, password, name, business } = body || {}
 
